@@ -13,8 +13,8 @@ class AddBackground extends React.Component {
     this.setState({ newColor: ncolor.hex });
     console.log(this.state.newColor);
     // alert('Your favorite flavor is: ' + this.state.newColor);
-    let id = 16;
-    let name = this.state.newColor
+    let id = 46;
+    let name = "color"
     let color = this.state.newColor
     console.log("AddBackground name:" + color)
 
@@ -26,7 +26,7 @@ class AddBackground extends React.Component {
         console.log(data);  
       }
     }).done( background => {
-      this.props.updateBackground(background)
+      this.props.updateBackgroundColor(background)
     })
 
   };

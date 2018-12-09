@@ -4,13 +4,14 @@ require 'pry'
 class Api::BackgroundsController < ApplicationController
 
 	def index
-    render json: Background.all
+
+    background = Background.all
+    render json: background
   end
 
   def create
     # binding.pry
     background = Background.new(background_params)
-    # binding.pry
     if background.save
       render json: background
     else

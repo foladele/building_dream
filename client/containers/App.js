@@ -12,6 +12,7 @@ class App extends React.Component {
     	isColor: false, 
     	isImage: false,
     	showMenu: false,
+      image: "",
     	backgroundStyle: {},
 
     };
@@ -33,23 +34,47 @@ class App extends React.Component {
       let newState = Object.assign({}, this.state);
       let bgColor = {
         // backgroundColor: '#fce4ec'
-        backgroundColor: `${newState.backgrounds[0].name}`
+        backgroundColor: `${newState.backgrounds[1].color}`,
+        backgroundImage: `url('${newState.backgrounds[1].image}')`
       };
       this.setState({backgroundStyle: bgColor});
-      console.log(newState.backgrounds[0].name)
+      console.log(newState.backgrounds[1].name)
+      console.log(newState.backgrounds[1].color)
+      console.log(newState.backgrounds[1].image)
+
+
+      // let bgImage = {
+      //   backgroundColor: url(`${newState.backgrounds[1].image}`)
+      // };
+      // this.setState({backgroundStyle: bgImage});
+      // console.log(newState.backgrounds[1].image)
 
     })
   }
 
-   updateBackground(background) {
+  updateBackgroundColor(background) {
       let bgColor = {
-        backgroundColor: `${background.name}`
+
+        backgroundColor: `${background.color}`,
+        backgroundImage: `url('${background.image}')`
+
       };
       this.setState({backgroundStyle: bgColor});
 
       this.setState({ backgrounds: [ ...this.state.backgrounds, { ...background } ] }) 
   }
 
+ updateBackgroundImage(background) {
+      let bgImage = {
+
+        backgroundColor: "#ffffff",
+        backgroundImage: `url('${background.image}')`
+
+      };
+      this.setState({backgroundStyle: bgImage});
+
+      this.setState({ backgrounds: [ ...this.state.backgrounds, { ...background } ] }) 
+  }
 
 
   toggleColor(){
@@ -71,7 +96,7 @@ class App extends React.Component {
   		return(
 				<div className="left-align" style={this.state.backgroundStyle}>
 						<button onClick={this.toggleColor}>Back</button> 
-				  	{ <AddBackground updateBackground={this.updateBackground.bind(this)}/> }
+				  	{ <AddBackground updateBackgroundColor={this.updateBackgroundColor.bind(this)}/> }
   			</div>
 
   			)//end return
@@ -83,7 +108,7 @@ class App extends React.Component {
       return(
         <div className="left-align" style={this.state.backgroundStyle}>
             <button onClick={this.toggleImage}>Back</button> 
-            { <ImageUploader updateBackground={this.updateBackground.bind(this)}/> }
+            { <ImageUploader updateBackgroundImage={this.updateBackgroundImage.bind(this)}/> }
         </div>
 
         )//end return

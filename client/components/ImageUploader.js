@@ -25,12 +25,20 @@ class ImageUploader extends React.Component {
       error: function (data) {
           console.log('Error:', data);
       }
-    }).done( background => {
-      this.setState({ background })
+    }).done( backgrounds => {
+      this.setState({ backgrounds })
       let newState = Object.assign({}, this.state);
-      // let img = `${newState.backgrounds[0].image_file_name)}`
-      // console.log(newState.backgrounds[0].image_file_name);
+      let img = newState.backgrounds[1].image
+      console.log(img)
+      // console.log(img[1])
+      this.setState({image: img});
+
     })
+  }
+
+  componentWillUnmount() {
+    // Make sure to revoke the data uris to avoid memory leaks
+    this.state.files.forEach(f => URL.revokeObjectURL(f.preview))
   }
 
   onDrop(files) {
@@ -39,45 +47,51 @@ class ImageUploader extends React.Component {
       files
     });
 
+    // this.setState({
+    //   files: files.map(file => Object.assign(file, {preview: URL.createObjectURL(file)}))
+    // });
+
+    console.log(this.state.files)
+
      files.map(img => {
-	 		let name = img.name;
+	 		let name = "image";
 	 		let image = img
-	 		let color = " "
+	 		let color = "#ffffff"
  		  const fileData = new FormData();
-      fileData.append("background[name]", img.name);
+      fileData.append("background[name]", name);
       fileData.append("background[color]", color);
       fileData.append("background[image]", image);
       
      //  for (var pair of fileData.entries()) {
-     //       console.log(pair[0]+ ', ' + pair[1]); 
+     //    console.log(pair); 
+     //    console.log(pair[0]+ ', ' + pair[1]); 
      // }
-     //  console.log("name: " + name);
-     //  console.log(image);
-
+      let id = 47;
      	$.ajax({
-	    url: '/api/backgrounds/',
-	    type: 'POST',
+	    url: `/api/backgrounds/${id}`,
+	    type: 'PUT',
 	    data: fileData,
 	    dataType: 'JSON',
       contentType: false,
       processData: false,
       cache: false, 
 	    success: function (data) { 
-	      console.log(data);  
+	      // console.log(data);  
 	    },error: function (data) {  
 	      console.log(data);  
 	    } 
 	    }).done( image => {
-	       console.log(image);
+	       // console.log(image);
+         this.props.updateBackgroundImage(image)
 	    })
      });
 
   }
 
   render () {
+    const {files} = this.state;
     return (
       <div>
-        <div>csrf: {this.props.csrf}</div>
         <Dropzone onDrop={this.onDrop.bind(this)}>
           {({ isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
             if (isDragActive) {
@@ -91,13 +105,10 @@ class ImageUploader extends React.Component {
               : "Try dropping some files.";
           }}
         </Dropzone>
-        
+       
       </div>
     );
   }
 }
 
-ImageUploader.propTypes = {
-  csrf: PropTypes.string,
-};
 export default ImageUploader;
