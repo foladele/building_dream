@@ -19,3 +19,6 @@
         // <hr/>
         // <h2>Dropped files</h2>
         //  <img src={this.state.image} />
+
+
+        <!--   <body style="background-color: <%= Background.first.color%> "> -->

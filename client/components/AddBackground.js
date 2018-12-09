@@ -28,8 +28,44 @@ class AddBackground extends React.Component {
     }).done( background => {
       this.props.updateBackgroundColor(background)
     })
+  }
 
-  };
+ // handleChangeComplete = (ncolor, event) => {
+ //   event.preventDefault();
+
+ //   this.setState({ newColor: ncolor.hex });
+
+ //   let id = 46;
+ //   let name = "color"
+ //   let image = " "
+ //   let color = this.state.newColor
+ //   console.log("AddBackground name:" + color)
+
+
+ //   const fileData = new FormData();
+ //   fileData.append("background[name]", name);
+ //   fileData.append("background[color]", color);
+ //   fileData.append("background[image]", image);
+
+ //    $.ajax({
+ //    url: `/api/backgrounds/${id}`,
+ //    type: 'PUT',
+ //    data: fileData,
+ //    dataType: 'JSON',
+ //    contentType: false,
+ //    processData: false,
+ //    cache: false, 
+ //    success: function (data) { 
+ //      // console.log(data);  
+ //    },error: function (data) {  
+ //      console.log(data);  
+ //    } 
+ //    }).done( data => {
+ //       // console.log(image);
+ //       this.props.updateBackgroundColor(data)
+ //    })
+
+ // }
 
   render() {
     return (

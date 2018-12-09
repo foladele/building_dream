@@ -11,7 +11,7 @@
   <% end %>
 </head>
 
-  <body>
+<body style="background-image: url(<%= Background.second.image_url_large %>); "> 
     <%= yield %>
       <%= javascript_include_tag *webpack_asset_paths('application') %>
 </body>

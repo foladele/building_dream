@@ -4,7 +4,6 @@ require 'pry'
 class Api::BackgroundsController < ApplicationController
 
 	def index
-
     background = Background.all
     render json: background
   end

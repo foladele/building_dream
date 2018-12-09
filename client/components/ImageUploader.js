@@ -105,7 +105,9 @@ class ImageUploader extends React.Component {
               : "Try dropping some files.";
           }}
         </Dropzone>
-       
+       <hr/>
+        <h2>Dropped files</h2>
+         <img src={this.state.image} />
       </div>
     );
   }
