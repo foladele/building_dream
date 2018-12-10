@@ -57,9 +57,12 @@ class ImageUploader extends React.Component {
 	 		let name = "image";
 	 		let image = img
 	 		let color = "#ffffff"
+      let status = true
+
  		  const fileData = new FormData();
       fileData.append("background[name]", name);
       fileData.append("background[color]", color);
+      fileData.append("background[status]", status);
       fileData.append("background[image]", image);
       
      //  for (var pair of fileData.entries()) {

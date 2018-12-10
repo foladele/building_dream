@@ -11,8 +11,27 @@
   <% end %>
 </head>
 
-<body style="background-image: url(<%= Background.second.image_url_large %>); "> 
-    <%= yield %>
-      <%= javascript_include_tag *webpack_asset_paths('application') %>
-</body>
+<% if Background.any? == false %>
+
+  <% Background.create(name: "color", color: "#ffffff", status: true) %>
+  <% Background.create(name: "image", color: "#ffffff", status: false) %>
+
+<% end %>
+
+<% if Background.first.status == true %>
+
+  <body style="background-color: <%= Background.first.color %> ">
+      <%= yield %>
+        <%= javascript_include_tag *webpack_asset_paths('application') %>
+  </body>
+
+<% else %>
+
+  <body style="background-image: url(<%= Background.second.image_url_large %>); "> 
+      <%= yield %>
+        <%= javascript_include_tag *webpack_asset_paths('application') %>
+  </body>
+
+<% end %>
+
 </html>

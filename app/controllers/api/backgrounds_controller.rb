@@ -36,7 +36,7 @@ class Api::BackgroundsController < ApplicationController
   private
 
   def background_params
-    params.require(:background).permit(:name, :color, :image)
+    params.require(:background).permit(:name, :color, :status, :image)
   end
 
 end

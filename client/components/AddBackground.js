@@ -16,12 +16,13 @@ class AddBackground extends React.Component {
     let id = 46;
     let name = "color"
     let color = this.state.newColor
+    let status = true
     console.log("AddBackground name:" + color)
 
     $.ajax({
       url: `/api/backgrounds/${id}`,
       type: 'PUT',
-      data: { background: { name, color} },
+      data: { background: { name, color, status} },
       success: function (data) {  
         console.log(data);  
       }

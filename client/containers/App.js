@@ -131,7 +131,10 @@ class App extends React.Component {
 								</div>
 							) : (null)
 							
-						}						
+						}	
+            <div class="first">
+              <h3>Queen's Dream Board</h3>
+            </div>					
 	  			</div>
   		)//end return
 
