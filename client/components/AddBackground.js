@@ -28,6 +28,7 @@ class AddBackground extends React.Component {
       }
     }).done( background => {
       this.props.updateBackgroundColor(background)
+      alert('Refresh Page');
     })
   }
 

@@ -12,6 +12,7 @@ class ImageUploader extends React.Component {
       files: [],
       image: "",
     }
+    this.currentImage = this.currentImage.bind(this)
   }
 
   componentDidMount() {
@@ -39,6 +40,27 @@ class ImageUploader extends React.Component {
   componentWillUnmount() {
     // Make sure to revoke the data uris to avoid memory leaks
     this.state.files.forEach(f => URL.revokeObjectURL(f.preview))
+  }
+
+  currentImage()
+  {
+    
+    let id = 47;
+    let name = "image"
+    let color = "#ffffff"
+    let status = true
+
+    $.ajax({
+      url: `/api/backgrounds/${id}`,
+      type: 'PUT',
+      data: { background: { name, color, status} },
+      success: function (data) {  
+        console.log(data);  
+      }
+    }).done( image => {
+      this.props.updateBackgroundImage(image)
+      alert('Refresh Page');
+    })
   }
 
   onDrop(files) {
@@ -86,6 +108,7 @@ class ImageUploader extends React.Component {
 	    }).done( image => {
 	       // console.log(image);
          this.props.updateBackgroundImage(image)
+         alert('Refresh Page');
 	    })
      });
 
@@ -110,7 +133,7 @@ class ImageUploader extends React.Component {
         </Dropzone>
        <hr/>
         <h2>Dropped files</h2>
-         <img src={this.state.image} />
+         <img src={this.state.image} onClick={this.currentImage}/>
       </div>
     );
   }

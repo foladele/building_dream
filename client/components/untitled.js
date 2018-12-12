@@ -22,3 +22,18 @@
 
 
         <!--   <body style="background-color: <%= Background.first.color%> "> -->
+
+
+                <button onClick={this.showMenu}>
+                                                        V
+                                                </button> 
+                                                {
+                                                        this.state.showMenu ? (
+                                                                <div className="menu">
+                                                                        <button onClick={this.toggleColor}> color </button><br/>
+                                                                        <button onClick={this.toggleImage}> image </button><br/>
+                                                                        <button> Menu item 3 </button><br/>
+                                                                </div>
+                                                        ) : (null)
+                                                        
+                                                }       
