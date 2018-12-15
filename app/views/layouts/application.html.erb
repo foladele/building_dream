@@ -8,6 +8,12 @@
     <%= javascript_include_tag 'application' %>
     <% if Rails.env.development? %>
     <script src="http://localhost:3808/webpack-dev-server.js"></script>
+    <style>
+      body, html {
+        height: 100%;
+        margin: 0;
+      }
+    </style>
   <% end %>
 </head>
 
@@ -20,14 +26,14 @@
 
 <% if Background.first.status == true %>
 
-  <body style="background-color: <%= Background.first.color %> ">
+  <body style="background-color: <%= Background.first.color %>">
       <%= yield %>
         <%= javascript_include_tag *webpack_asset_paths('application') %>
   </body>
 
 <% else %>
 
-  <body style="background-image: url(<%= Background.second.image_url_large %>); "> 
+  <body style="background-image: url(<%= Background.second.image_url_large %>); height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; "> 
       <%= yield %>
         <%= javascript_include_tag *webpack_asset_paths('application') %>
   </body>
