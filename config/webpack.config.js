@@ -71,9 +71,25 @@ var config = {
         ],
         exclude: /node_modules/,
         include: [ path.join(__dirname, "..", "client")],
+      },
+
+      {
+        test: /\.scss$/,
+        loader: 'style-loader!css-loader!sass-loader'
+      },
+      
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+            loader: 'file-loader',
+            options: {
+                name: '[name].[ext]',
+                outputPath: 'fonts/'
+            }
+        }]
       }
     ]
-  },
+  }, watch: true,
 
   plugins: [
     new webpack.LoaderOptionsPlugin({ options: { postcss: [ autoprefixer ] }}),

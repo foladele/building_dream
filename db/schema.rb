@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181209221622) do
+ActiveRecord::Schema.define(version: 20190320172830) do
 
   create_table "backgrounds", force: :cascade do |t|
     t.string "name"
@@ -21,7 +21,26 @@ ActiveRecord::Schema.define(version: 20181209221622) do
     t.string "image_content_type"
     t.integer "image_file_size"
     t.datetime "image_updated_at"
-    t.boolean "status", default: false, null: false
+    t.boolean "status"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "title"
+    t.string "type"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "file_file_name"
+    t.string "file_content_type"
+    t.integer "file_file_size"
+    t.datetime "file_updated_at"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "title"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
