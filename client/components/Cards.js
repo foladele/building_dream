@@ -37,7 +37,7 @@ const mdc_image_list__item = {
     margin: '5px',
     border: '1px solid #ccc',
     float: 'left',
-    width: '176.5px',
+    width: '300px',
     position: 'relative',
     boxSizing: 'border_box',
     listStyleType: 'none',
@@ -83,24 +83,26 @@ class Cards extends React.Component {
                 <FreeScrollBar>
                  <View>
 
-                    <ul className="mdc-image-list my-image-list" style={mdc_image_list, my_image_list}>
+                    <ul className="mdc-image-list my-image-list" >
 
                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label3</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
 
                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label1</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
                      
 
@@ -108,9 +110,10 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label2</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
 
 
@@ -118,18 +121,20 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label3</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
 
                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label1</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
                      
 
@@ -137,9 +142,10 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label2</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
 
 
@@ -147,18 +153,20 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label3</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
 
                        <li className="mdc-image-list__item" style={mdc_image_list__item}>
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label1</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
                      
 
@@ -166,9 +174,10 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label2</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
 
 
@@ -176,9 +185,10 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                        <div className="mdc-image-list__supporting" style={mdc_image_list__supporting}>
-                          <span className="mdc-image-list__label">Text label3</span>
-                        </div>
+                          <div class="card-content">
+                            <span class="card-title black-text">Image Card</span>
+                            <p>I am a very simple card. I am good at containing small bits of information.</p>
+                          </div>
                       </li>
                      
                     </ul>

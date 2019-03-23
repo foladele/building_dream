@@ -39,7 +39,7 @@ class Canvas extends React.Component {
  
  render() {
     return (
-      <div className="">
+      <div className="container">
         <div>
         	<canvas ref="canvas" width={300} heigth={150} />
         </div>
