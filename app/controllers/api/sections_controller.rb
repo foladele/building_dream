@@ -18,7 +18,7 @@ class Api::SectionsController < ApplicationController
   end
 
   def update
-    # binding.pry
+    
     section = Section.find(params[:id])
     # section.update(name: params[:name], color: params[:color])
     if section.update(section_params)
@@ -29,7 +29,7 @@ class Api::SectionsController < ApplicationController
   end
 
   def destroy
-    binding.pry
+    # binding.pry
     Section.find(params[:id]).destroy
     render json: { message: 'Section deleted' }
   end
@@ -38,7 +38,7 @@ class Api::SectionsController < ApplicationController
 
   def section_params
     # binding.pry
-    params.require(:section).permit(:title, :color)
+    params.require(:section).permit(:title, :color, :collapse)
   end
 
 end

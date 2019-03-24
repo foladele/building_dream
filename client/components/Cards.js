@@ -7,11 +7,6 @@ import { AppRegistry, StyleSheet, Text, View } from 'react-native-web';
 import FreeScrollBar from 'react-free-scrollbar';
 
 
-const bStyle = {
-  height: '400px',
-  width: '1280px'
-};
-
  const my_image_list  = {
   // @include mdc_image_list_standard_columns(5);
   maxWidth: '960px',
@@ -72,6 +67,11 @@ class Cards extends React.Component {
     super(props);
 
     this.state = { 
+
+      bStyle: {
+        height: '400px',
+        width: '1280px',
+      },
       sectionStyle: {
         color: '#ffd600', //`${this.props.color}`,
         textColor: 'black',
@@ -79,12 +79,24 @@ class Cards extends React.Component {
       sectionCount: `${this.props.sectionCount}`,
       lastSectionIndex: `${this.props.lastSectionIndex}`,
       itemCount: 0,
-      isAdd: false,
+      sect: false,
+      
     };
 
+    this.update = this.update.bind(this);
 
   }
 
+  update(id, title, color, collapse)
+  {
+
+    console.log(collapse);
+    let new_collapse = !collapse;
+    console.log(new_collapse);
+    let section = {title: title, color: color, collapse: new_collapse};
+    this.props.editSection(id, section);
+    
+  }
  
  render() {
     return (
@@ -95,112 +107,21 @@ class Cards extends React.Component {
              <div className="card-action black-text">
                 <span className="card-title">{this.props.title}</span>
                  <a className="right" onClick={ () => this.props.delete(this.props.id) } >delete</a>
-                 <a className="right" href="#">collapse</a>
+                 <a className="right" onClick={ () => this.update(this.props.id,this.props.title,this.props.color,this.props.collapse) }>
+                  {Boolean(this.props.collapse) ? (<div>expand</div>): (<div>collapse</div>)}
+                 </a>
               </div>
               <div className="card-content black-text white">
-               <div className="" style={bStyle}>
+              {
+
+                Boolean(this.props.collapse) ? (null):
+               (<div className="" style={this.state.bStyle}>
                 <FreeScrollBar>
                  <View>
 
                     <ul className="mdc-image-list my-image-list" >
 
                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-
-                      <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-                     
-
-                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-
-
-                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-
-                      <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-                     
-
-                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-
-
-                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-
-                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-                     
-
-                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-
-
-                       <li className="mdc-image-list__item" style={mdc_image_list__item}>
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
@@ -219,7 +140,9 @@ class Cards extends React.Component {
                     </ul>
                  </View>
                 </FreeScrollBar>
-               </div>
+               </div>)
+               }
+               <div>
                { 
 
                 this.state.sectionCount < 10 && this.state.lastSectionIndex < 9 ? (
@@ -227,6 +150,7 @@ class Cards extends React.Component {
                  <a className="right" onClick={this.props.toggleIsNewCard}>Add Section</a>
                 </div>): (null)
                }
+               </div>
               </div>
             </div>
           </div>

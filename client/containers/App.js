@@ -58,6 +58,7 @@ class App extends React.Component {
   this.toggleIsNewCard = this.toggleIsNewCard.bind(this);
   this.addSection = this.addSection.bind(this);
   this.deleteSection = this.deleteSection.bind(this);
+  this.onEditSection = this.onEditSection.bind(this);
 
   }
 
@@ -93,11 +94,12 @@ class App extends React.Component {
   addSection(e){
      let title = this.refs.title.value;
      let color = '#dcedc8';
+     let collapse = true;
      e.preventDefault();
      $.ajax({
        url: '/api/sections',
        type: 'POST',
-       data: { section: { title, color }},
+       data: { section: { title, color , collapse}},
        dataType: 'JSON',
        success: function (data) {
         console.log(data);
@@ -129,6 +131,29 @@ class App extends React.Component {
     });
   }
 
+
+   onEditSection(id, section){
+
+    $.ajax({
+      url: `/api/sections/${id}`,
+      type: 'PUT',
+      data: { section: section },
+      dataType: 'JSON'
+    }).done( section => {
+      console.log(section);
+      let sections = this.state.sections;
+      let editSection = sections.find( i => i.id === section.id );
+      editSection.title = section.title;
+      editSection.color = section.color;
+      editSection.collapse = section.collapse;
+      this.setState({ sections: sections });
+    }).fail( msg => {
+       alert(msg.errors);
+    });
+    
+  }
+
+
   render() {
 
     if(this.state.isLandingPad)
@@ -148,7 +173,10 @@ class App extends React.Component {
     }else
     {
       let sections = this.state.sections.map(section => {
-        return(<Cards key={`section-${section.id}`} {...section} toggleIsNewCard={this.toggleIsNewCard} sectionCount={this.state.sectionCount} lastSectionIndex={this.state.lastSectionIndex} delete={this.deleteSection}/>);
+        return(<Cards key={`section-${section.id}`} {...section} 
+        toggleIsNewCard={this.toggleIsNewCard} sectionCount={this.state.sectionCount} 
+        lastSectionIndex={this.state.lastSectionIndex} delete={this.deleteSection}
+         editSection={this.onEditSection} />);
       })
 
       return (
