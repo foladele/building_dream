@@ -1,13 +1,11 @@
 require 'pry'
-class SectionsController < ApplicationController
+class Api::SectionsController < ApplicationController
 
   def index
   	section = Section.all
     render json: section
   end
-
-  def show
-  end
+  
 
   def create
     # binding.pry
@@ -20,6 +18,7 @@ class SectionsController < ApplicationController
   end
 
   def update
+    # binding.pry
     section = Section.find(params[:id])
     # section.update(name: params[:name], color: params[:color])
     if section.update(section_params)
@@ -30,6 +29,7 @@ class SectionsController < ApplicationController
   end
 
   def destroy
+    binding.pry
     Section.find(params[:id]).destroy
     render json: { message: 'Section deleted' }
   end
@@ -37,6 +37,7 @@ class SectionsController < ApplicationController
   private
 
   def section_params
+    # binding.pry
     params.require(:section).permit(:title, :color)
   end
 

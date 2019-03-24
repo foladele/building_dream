@@ -43,6 +43,17 @@ const mdc_image_list__item = {
     listStyleType: 'none',
 }
 
+const mdc_image_list__item_new = {
+    margin: '5px',
+    border: '5px dashed #ccc',
+    borderRadius: '8px',
+    float: 'left',
+    width: '300px',
+    position: 'relative',
+    boxSizing: 'border_box',
+    listStyleType: 'none',
+}
+
 const mdc_image_list__image  = {
     width: 100,
     height: '130px',
@@ -61,11 +72,19 @@ class Cards extends React.Component {
     super(props);
 
     this.state = { 
+      sectionStyle: {
+        color: '#ffd600', //`${this.props.color}`,
+        textColor: 'black',
+      },
+      sectionCount: `${this.props.sectionCount}`,
+      lastSectionIndex: `${this.props.lastSectionIndex}`,
+      itemCount: 0,
       isAdd: false,
     };
 
 
   }
+
  
  render() {
     return (
@@ -73,9 +92,9 @@ class Cards extends React.Component {
         <div className="">
           <div className="">
             <div className="card grey lighten-5">
-             <div className="card-action">
-                <span className="card-title">Welcome!</span>
-                 <a className="right" href="#">delete</a>
+             <div className="card-action black-text">
+                <span className="card-title">{this.props.title}</span>
+                 <a className="right" onClick={ () => this.props.delete(this.props.id) } >delete</a>
                  <a className="right" href="#">collapse</a>
               </div>
               <div className="card-content black-text white">
@@ -89,8 +108,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -99,8 +118,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -110,8 +129,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -121,8 +140,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -131,8 +150,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -142,8 +161,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -153,8 +172,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -163,8 +182,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -174,8 +193,8 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
                       </li>
@@ -185,19 +204,29 @@ class Cards extends React.Component {
                         <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
                           <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
                         </div>
-                          <div class="card-content">
-                            <span class="card-title black-text">Image Card</span>
+                          <div className="card-content">
+                            <span className="card-title black-text">Image Card</span>
                             <p>I am a very simple card. I am good at containing small bits of information.</p>
                           </div>
+                      </li>
+
+                      <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
+                        <div className="card-content">
+                            <span className="card-title grey-text center">Add Item</span>
+                        </div>
                       </li>
                      
                     </ul>
                  </View>
                 </FreeScrollBar>
                </div>
+               { 
+
+                this.state.sectionCount < 10 && this.state.lastSectionIndex < 9 ? (
                 <div className="card-action ">
                  <a className="right" onClick={this.props.toggleIsNewCard}>Add Section</a>
-                </div>
+                </div>): (null)
+               }
               </div>
             </div>
           </div>
