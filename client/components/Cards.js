@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone';
 import request from "superagent";
 import { AppRegistry, StyleSheet, Text, View } from 'react-native-web';
 import FreeScrollBar from 'react-free-scrollbar';
-
+import M from "materialize-css";
 
  const my_image_list  = {
   // @include mdc_image_list_standard_columns(5);
@@ -85,6 +85,34 @@ class Cards extends React.Component {
 
     this.update = this.update.bind(this);
 
+      console.log("sectionCount props: " + this.props.sectionCount);
+      console.log("lastSectionIndex props: " + this.props.lastSectionIndex);
+      console.log("yourIndex props: " + this.props.yourIndex);
+  }
+
+  componentDidMount() {
+    const options = {
+      onOpenStart: () => {
+        console.log("Open Start");
+      },
+      onOpenEnd: () => {
+        console.log("Open End");
+      },
+      onCloseStart: () => {
+        console.log("Close Start");
+      },
+      onCloseEnd: () => {
+        console.log("Close End");
+      },
+      inDuration: 250,
+      outDuration: 250,
+      opacity: 0.5,
+      dismissible: false,
+      startingTop: "4%",
+      endingTop: "10%"
+    };
+    M.Modal.init(this.Modal, options);
+
   }
 
   update(id, title, color, collapse)
@@ -144,10 +172,21 @@ class Cards extends React.Component {
                }
                <div>
                { 
-
-                this.state.sectionCount < 10 && this.state.lastSectionIndex < 9 ? (
+                this.props.lastSectionIndex === this.props.yourIndex ? (
                 <div className="card-action ">
-                 <a className="right" onClick={this.props.toggleIsNewCard}>Add Section</a>
+                <div>
+                  <a className="right modal-trigger" data-target="modal1" >Add Section</a>
+                  <div ref={Modal => { this.Modal = Modal; }} id="modal1" className="modal modal-fixed-footer" >
+                    <div className="modal-content">
+                      <h4>Modal Header</h4>
+                      <p>A bunch of text</p>
+                    </div>
+                    <div className="modal-footer">
+                      <a href="#" className="modal-close waves-effect waves-red btn-flat"> Disagree </a>
+                      <a href="#" className="modal-close waves-effect waves-green btn-flat"> Agree</a>
+                    </div>
+                  </div>
+                </div>
                 </div>): (null)
                }
                </div>

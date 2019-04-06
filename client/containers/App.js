@@ -1,6 +1,7 @@
 import React from 'react';
 import LandingPad from '../components/LandingPad';
 import Cards from '../components/Cards';
+import Modal from '../components/Modal';
 import BackgroundList from '../components/BackgroundList';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native-web';
 import FreeScrollBar from 'react-free-scrollbar';
@@ -62,7 +63,7 @@ class App extends React.Component {
 
   }
 
-    componentDidMount() {
+    componentWillMount() {
     $.ajax({
       url: '/api/sections',
       type: 'GET',
@@ -74,8 +75,7 @@ class App extends React.Component {
         this.setState({ sections });
         this.state.sectionCount = sections.length;
         this.state.lastSectionIndex = sections.indexOf(sections.slice(-1)[0])
-        console.log("sectionCount: " + this.state.sectionCount);
-        console.log("lastSectionIndex: " + this.state.lastSectionIndex);
+        
     })
   }
 
@@ -172,10 +172,19 @@ class App extends React.Component {
       )
     }else
     {
+      const sectionCount = this.state.sections.length;
+      var lastSectionIndex = 0;
+      if(this.state.sections.length != 0)
+      {
+        lastSectionIndex = this.state.sections.indexOf(this.state.sections.slice(-1)[0]) ;
+        console.log('lastSectionIndex ' + lastSectionIndex);
+      }
+      
       let sections = this.state.sections.map(section => {
+        console.log('reaching? ' + this.state.sections.indexOf(section))
         return(<Cards key={`section-${section.id}`} {...section} 
-        toggleIsNewCard={this.toggleIsNewCard} sectionCount={this.state.sectionCount} 
-        lastSectionIndex={this.state.lastSectionIndex} delete={this.deleteSection}
+        toggleIsNewCard={this.toggleIsNewCard} sectionCount={sectionCount} 
+        lastSectionIndex={lastSectionIndex}  yourIndex={this.state.sections.indexOf(section)} delete={this.deleteSection}
          editSection={this.onEditSection} />);
       })
 

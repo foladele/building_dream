@@ -92,6 +92,8 @@ var config = {
   }, watch: true,
 
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
     new webpack.LoaderOptionsPlugin({ options: { postcss: [ autoprefixer ] }}),
     // must match config.webpack.manifest_filename
     new StatsPlugin('manifest.json', {

@@ -1,6 +1,6 @@
 import React from 'react';
 import M from "materialize-css";
-import "materialize-css/dist/css/materialize.min.css";
+// import "materialize-css/dist/css/materialize.min.css";
 
 
 class Modal extends React.Component {
@@ -36,15 +36,14 @@ class Modal extends React.Component {
     return (
       <div>
         <a className="waves-effect waves-light btn modal-trigger" data-target="modal1" >Modal</a>
-
         <div ref={Modal => { this.Modal = Modal; }} id="modal1" className="modal modal-fixed-footer" >
           <div className="modal-content">
             <h4>Modal Header</h4>
             <p>A bunch of text</p>
           </div>
-          <div class="modal-footer">
-            <a href="#" class="modal-close waves-effect waves-red btn-flat"> Disagree </a>
-            <a href="#" class="modal-close waves-effect waves-green btn-flat"> Agree</a>
+          <div className="modal-footer">
+            <a href="#" className="modal-close waves-effect waves-red btn-flat"> Disagree </a>
+            <a href="#" className="modal-close waves-effect waves-green btn-flat"> Agree</a>
           </div>
         </div>
       </div>
