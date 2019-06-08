@@ -8,6 +8,7 @@ class Section < ApplicationRecord
 	    title: title,
 	    color: color,
 	    collapse: collapse,
+	    kind: kind,
 	    errors: errors
 	  }
 	 end

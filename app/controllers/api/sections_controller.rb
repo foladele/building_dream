@@ -38,7 +38,7 @@ class Api::SectionsController < ApplicationController
 
   def section_params
     # binding.pry
-    params.require(:section).permit(:title, :color, :collapse)
+    params.require(:section).permit(:title, :color, :collapse, :kind)
   end
 
 end

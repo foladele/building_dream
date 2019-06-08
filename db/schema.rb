@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190324142807) do
+ActiveRecord::Schema.define(version: 20190410000312) do
 
   create_table "backgrounds", force: :cascade do |t|
     t.string "name"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20190324142807) do
 
   create_table "items", force: :cascade do |t|
     t.string "title"
-    t.string "type"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,6 +33,7 @@ ActiveRecord::Schema.define(version: 20190324142807) do
     t.string "file_content_type"
     t.integer "file_file_size"
     t.datetime "file_updated_at"
+    t.string "kind"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20190324142807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "collapse"
+    t.string "kind"
   end
 
 end

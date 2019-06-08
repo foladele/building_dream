@@ -2,13 +2,32 @@ import React from 'react';
 import LandingPad from '../components/LandingPad';
 import Cards from '../components/Cards';
 import Modal from '../components/Modal';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import BackgroundList from '../components/BackgroundList';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native-web';
 import FreeScrollBar from 'react-free-scrollbar';
 //import Styles from '../components/Styles';
 
 // import MaterialIcon, {colorPalette} from 'material-icons-react';
+const bottomPadding = {
+    paddingBottom: '60px',
+    paddingTop: '60px',
+    zIndex: "-1",
+};
 
+const headerStyle = {
+
+    width: "100%",
+    position: "fixed",
+    backgroundRepeat: "repeat",
+    backgroundAttachment: "scroll",
+    backgroundPosition:" 0% 0%",
+    top: '0pt',
+    left: '0pt',
+    right: "0pt",
+
+ };
 const Styles = StyleSheet.create({
   bigblue: {
     color: 'blue',
@@ -91,22 +110,19 @@ class App extends React.Component {
     this.setState({ isNewCard: !this.state.isNewCard })
   }
 
-  addSection(e){
-     let title = this.refs.title.value;
-     let color = '#dcedc8';
-     let collapse = true;
-     e.preventDefault();
+  addSection(title, color, collapse, kind){
+     console.log("App sess - " + title + " " +  color + " " + collapse);
      $.ajax({
        url: '/api/sections',
        type: 'POST',
-       data: { section: { title, color , collapse}},
+       data: { section: { title, color , collapse, kind}},
        dataType: 'JSON',
        success: function (data) {
         console.log(data);
       }
      }).done( section => {
-       this.setState({ sections: [{...section}, ...this.state.sections ]});
-       this.refs.addForm.reset();
+       this.setState({ sections: [...this.state.sections, {...section}]});
+       //this.refs.addForm.reset();
      }).fail( errors => {
        alert(errors);
      })
@@ -114,6 +130,7 @@ class App extends React.Component {
   }
 
   deleteSection(id) {
+
     $.ajax({
       url: `/api/sections/${id}`,
       type: 'DELETE'
@@ -181,43 +198,24 @@ class App extends React.Component {
       }
       
       let sections = this.state.sections.map(section => {
-        console.log('reaching? ' + this.state.sections.indexOf(section))
         return(<Cards key={`section-${section.id}`} {...section} 
         toggleIsNewCard={this.toggleIsNewCard} sectionCount={sectionCount} 
         lastSectionIndex={lastSectionIndex}  yourIndex={this.state.sections.indexOf(section)} delete={this.deleteSection}
-         editSection={this.onEditSection} />);
+         editSection={this.onEditSection} addSection={this.addSection} />);
       })
 
       return (
         <div >
-          <nav>
-            <div className="nav-wrapper">
-              <a href="#" className="brand-logo right">Logo</a>
-              <a href="#" className="brand-logo center">Queen's Dream Board</a>
-              <ul id="nav-mobile" className="left hide-on-med-and-down">
-                <li><a onClick={this.toggleIsLandingPad}>Menu</a></li>
-              </ul>
-            </div>
+          <nav style={headerStyle}>
+            <Header toggleIsLandingPad={this.toggleIsLandingPad}/>
           </nav>
-          <div>
-          {
-            this.state.isNewCard === true ? 
-            (
-              <div>
-                  <h4>New Section</h4>
-                  <form ref="addForm" onSubmit={this.addSection}>
-                    <input placeholder="Title" ref="title" required={true} />
-                    <input placeholder="Color" ref="color" />
-                    <button className="btn">Add</button>
-                  </form>
-                </div>
-              ): (null)
-            }
-          </div>
-          <div>
+          <div style={bottomPadding} >
             <ul>
               { sections }
             </ul>
+          </div>
+          <div>
+            <Footer />
           </div>
         </div>
       )
