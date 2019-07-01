@@ -1,6 +1,7 @@
 class Section < ApplicationRecord
 
-	# has_many :item #, dependent: :destroy
+	validates_presence_of :title
+	has_many :items , dependent: :destroy
 
 	def as_json(_opts = {})
 	 {

@@ -2,29 +2,29 @@ require 'pry'
 class Api::SectionsController < ApplicationController
 
   def index
-  	section = Section.all
-    render json: section
+  	@sections = Section.all
+    render json: @sections
   end
   
 
   def create
     # binding.pry
-    section = Section.new(section_params)
-    if section.save
-      render json: section
+    @section = Section.new(section_params)
+    if @section.save
+      render json: @section
     else
-      render json: { errors: section.errors, status: :unprocessable_entity }
+      render json: { errors: @section.errors, status: :unprocessable_entity }
     end
   end
 
   def update
     
-    section = Section.find(params[:id])
+    @section = Section.find(params[:id])
     # section.update(name: params[:name], color: params[:color])
-    if section.update(section_params)
-      render json: section
+    if @section.update(section_params)
+      render json: @section
     else
-       render json: { errors: section.errors, status: :unprocessable_entity }
+       render json: { errors: @section.errors, status: :unprocessable_entity }
     end
   end
 

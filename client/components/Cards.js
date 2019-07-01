@@ -8,7 +8,7 @@ import FreeScrollBar from 'react-free-scrollbar';
 import M from "materialize-css";
 import CardColor from '../components/CardColor';
 import Modal from '../components/Modal';
-// import Modal from '../components/Modal';
+import Items from '../components/Items';
 
  const my_image_list  = {
   // @include mdc_image_list_standard_columns(5);toggleIsLandingPad
@@ -47,6 +47,7 @@ const mdc_image_list__item_new = {
     borderRadius: '8px',
     float: 'left',
     width: '300px',
+    // height: '100px',
     position: 'relative',
     boxSizing: 'border_box',
     listStyleType: 'none',
@@ -74,6 +75,7 @@ class Cards extends React.Component {
       bStyle: {
         height: '400px',
         width: '1280px',
+        backgroundColor: `${this.props.color}`,
       },
       sectionStyle: {
         color:  `${this.props.color}` + '!important', //'#ffd600',
@@ -162,7 +164,7 @@ class Cards extends React.Component {
      let kind = this.state.kind;
      e.preventDefault();
      console.log("Kind " + kind);
-     console.log("cards sess - " + title + " " +  color + " " + collapse + " " + kind)
+     // console.log("cards sess - " + title + " " +  color + " " + collapse + " " + kind)
      if(title.length !== 0 && kind.length !== 0)
      {
        this.props.addSection(title, color, collapse, kind);
@@ -184,7 +186,7 @@ class Cards extends React.Component {
      let collapse = false;
      let kind = this.state.kind;
      let section = {title: title, color: color, collapse: collapse, kind: kind};
-     if(title.length !== 0 && kind.length !== 0)
+     if(title.length !== 0)
      {
       this.props.editSection(id, section);
      }
@@ -210,7 +212,7 @@ class Cards extends React.Component {
      this.setState({ id: this.props.id }, () => {
        console.log(this.state.id, 'this.props.id');
      }); 
-     console.log("editSection: " + this.state.editSection + " " + this.state.id);
+     // console.log("editSection: " + this.state.editSection + " " + this.state.id);
    
   }
 
@@ -235,9 +237,9 @@ class Cards extends React.Component {
                      <div className="input-field col s12 m6">
                         <select className="browser-default icons" onChange={this.handleChange}>
                           <option value="" disabled selected>Choose Section Type</option>
-                          <option value="text" >example 1</option>
-                          <option value="dream board" >example 2</option>
-                          <option value="images" >example 3</option>
+                          <option value="text" >Text</option>
+                          <option value="dream board" >Dreamboard</option>
+                          <option value="images" >Images</option>
                         </select>
                       </div>
                        <a href="#" className="waves-effect waves-green btn-flat black" onClick={this.toggleCardColor}>Choose Color</a>  
@@ -265,25 +267,8 @@ class Cards extends React.Component {
                 <FreeScrollBar>
                  <View>
 
-                    <ul className="mdc-image-list my-image-list" >
+                   <Items sectionId={this.props.id}/>
 
-                      <li className="mdc-image-list__item" style={mdc_image_list__item}>
-                        <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
-                          <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
-                        </div>
-                          <div className="card-content">
-                            <span className="card-title black-text">Image Card</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.</p>
-                          </div>
-                      </li>
-
-                      <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
-                        <div className="card-content">
-                            <span className="card-title grey-text center">Add Item</span>
-                        </div>
-                      </li>
-                     
-                    </ul>
                  </View>
                 </FreeScrollBar>
                </div>)
@@ -293,7 +278,7 @@ class Cards extends React.Component {
                 this.props.lastSectionIndex === this.props.yourIndex ? (
                 <div className="card-action " >     
                     <div>
-                      <a className="right modal-trigger" >Add Section</a>
+                      <a className="right" >XXXX</a>
                       <div ref={Modal => { this.Modal = Modal; }} id="modal2" className="modal modal-fixed-footer" >
                         <div className="modal-content">
                           <div>
@@ -303,9 +288,9 @@ class Cards extends React.Component {
                                <div className="input-field col s12 m6">
                                 <select className="browser-default icons" onChange={this.handleChange}>
                                   <option value="" disabled selected>Choose Section Type</option>
-                                  <option value="text" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">example 1</option>
-                                  <option value="dream board" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">example 2</option>
-                                  <option value="images" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">example 3</option>
+                                  <option value="text" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Text</option>
+                                  <option value="dream board" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Dreamboard</option>
+                                  <option value="images" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Images</option>
                                 </select>
                               </div>
 
