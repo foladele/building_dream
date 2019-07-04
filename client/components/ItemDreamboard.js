@@ -34,8 +34,20 @@ class ItemDreamboard extends React.Component {
 constructor(props) {
 
     super(props);
-};
 
+    this.addItem = this.addItem.bind(this);
+}
+
+  addItem(e){
+    e.preventDefault();
+    let title = "dreamboard test"
+    let kind = "dreamboard";
+    let description = "hello dreamboard test!"
+
+    
+    this.props.addItem(title,kind,description);
+  }
+  
  render() {
 
  	 	if(this.props.sectionItem === "false")
@@ -44,7 +56,7 @@ constructor(props) {
         <div>
             <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
               <div className="card-content">
-                  <span className="card-title grey-text center">Add Item</span>
+                  <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
               </div>
             </li>
         </div>

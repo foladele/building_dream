@@ -34,38 +34,16 @@ class ItemTexts extends React.Component {
 constructor(props) {
 
     super(props);
-};
+    this.addItem = this.addItem.bind(this);
+}
 
-	componentDidMount() 
-	{
-
-	   const options = {
-	    onOpenStart: () => {
-	      console.log("Open Start");
-	     
-	    },
-	    onOpenEnd: () => {
-	      console.log("Open End");
-	       
-	    },
-	    onCloseStart: () => {
-	      console.log("Close Start");
-	    },
-	    onCloseEnd: () => {
-	      console.log("Close End");
-	    },
-
-	    inDuration: 250,
-	    outDuration: 250,
-	    opacity: 0.5,
-	    dismissible: false,
-	    startingTop: "4%",
-	    endingTop: "10%"
-	  };
-
-	  M.Modal.init(this.Modal, options);
-  
-  }
+addItem(e){
+  e.preventDefault();
+  let title = "Texts test"
+  let kind = "Texts";
+  let description = "hello Texts test!"
+  this.props.addItem(title,kind,description);
+ }
 
  render() {
 
@@ -75,7 +53,7 @@ constructor(props) {
         <div>
             <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
               <div className="card-content">
-                  <span className="card-title grey-text center">Add Item</span>
+                  <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
               </div>
             </li>
         </div>
