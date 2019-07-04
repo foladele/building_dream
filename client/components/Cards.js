@@ -133,12 +133,12 @@ class Cards extends React.Component {
       endingTop: "10%"
     };
 
-    const oneseas = {
-        onOpenEnd: () => {
-        console.log("Open End " + this.props.title);
+    // const oneseas = {
+    //     onOpenEnd: () => {
+    //     console.log("Open End " + this.props.title);
 
-      },
-      };
+    //   },
+    //   };
 
     //M.Modal.init(this.ModalTwo,  options);
     M.Modal.init(this.Modal, options);
@@ -184,7 +184,7 @@ class Cards extends React.Component {
      let title = this.refs.newTitle.value;
      let color = '#dcedc8';
      let collapse = false;
-     let kind = this.state.kind;
+     let kind = this.props.kind;
      let section = {title: title, color: color, collapse: collapse, kind: kind};
      if(title.length !== 0)
      {
@@ -236,10 +236,7 @@ class Cards extends React.Component {
                      <input placeholder={this.props.title} ref="newTitle" required={true} />
                      <div className="input-field col s12 m6">
                         <select className="browser-default icons" onChange={this.handleChange}>
-                          <option value="" disabled selected>Choose Section Type</option>
-                          <option value="text" >Text</option>
-                          <option value="dream board" >Dreamboard</option>
-                          <option value="images" >Images</option>
+                          <option value={this.props.kind} disabled selected>{this.props.kind}</option>
                         </select>
                       </div>
                        <a href="#" className="waves-effect waves-green btn-flat black" onClick={this.toggleCardColor}>Choose Color</a>  
@@ -267,7 +264,7 @@ class Cards extends React.Component {
                 <FreeScrollBar>
                  <View>
 
-                   <Items sectionId={this.props.id}/>
+                   <Items sectionId={this.props.id} sectionKind={this.props.kind}/>
 
                  </View>
                 </FreeScrollBar>
@@ -289,8 +286,8 @@ class Cards extends React.Component {
                                 <select className="browser-default icons" onChange={this.handleChange}>
                                   <option value="" disabled selected>Choose Section Type</option>
                                   <option value="text" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Text</option>
-                                  <option value="dream board" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Dreamboard</option>
-                                  <option value="images" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Images</option>
+                                  <option value="dreamboard" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Dreamboard</option>
+                                  <option value="image" data-icon="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264">Images</option>
                                 </select>
                               </div>
 

@@ -194,7 +194,7 @@ class App extends React.Component {
       if(this.state.sections.length != 0)
       {
         lastSectionIndex = this.state.sections.indexOf(this.state.sections.slice(-1)[0]) ;
-        console.log('lastSectionIndex ' + lastSectionIndex);
+        // console.log('lastSectionIndex ' + lastSectionIndex);
       }
       
       let sections = this.state.sections.map(section => {

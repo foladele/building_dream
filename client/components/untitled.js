@@ -384,3 +384,199 @@ export default Cards;
                 </div>
               </div>
              </div>
+
+
+
+
+
+
+
+
+
+
+                                  // <div className="input-field col s12 m6">
+                     //    <select className="browser-default icons" onChange={this.handleChange}>
+                     //      <option value="" disabled selected>Choose Section Type</option>
+                     //      <option value="text" >Text</option>
+                     //      <option value="dreamboard" >Dreamboard</option>
+                     //      <option value="image" >Images</option>
+                     //    </select>
+                     //  </div>
+
+
+       return(
+          <div>
+            <ul className="mdc-image-list my-image-list" >
+              <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
+                <div className="card-content">
+                    <span className="card-title grey-text center" onClick={this.addItemModal}>Add Item</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+       )
+
+let items = this.state.items.map( item => {
+
+        if(item.kind === "image")
+        {
+          return(
+          <ItemImages key={`item-${item.id}`} {...item} deleteItem={this.deleteItem} sectionKind={this.props.sectionKind} sectionId={this.props.sectionId} sectionItem={this.state.itemPresent} addItem={this.addItem}/>);
+
+        }else if(item.kind === "dreamboard"){
+
+          return(<ItemDreamboard key={`item-${item.id}`} {...item} deleteItem={this.deleteItem} sectionKind={this.props.sectionKind} sectionId={this.props.sectionId} sectionItem={this.state.itemPresent} addItem={this.addItem}/>);
+
+        }else if(item.kind === "text"){
+
+          return(<ItemTexts key={`item-${item.id}`} {...item} deleteItem={this.deleteItem} sectionKind={this.props.sectionKind} sectionId={this.props.sectionId} sectionItem={this.state.itemPresent} addItem={this.addItem}/>);
+        }
+
+      });
+
+      return (
+        <div >
+          {items}
+          <ul>
+            <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
+              <div className="card-content">
+                <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      );
+
+
+
+let items = this.props.Items( item => {
+
+        return(
+          <div>
+            <ul className="mdc-image-list my-image-list" >
+              <li className="mdc-image-list__item" style={mdc_image_list__item}>
+                <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
+                  <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
+                </div>
+                  <div className="card-content">
+                    <span className="card-title black-text">{item.id}</span>
+                    <p>{item.description}</p>
+                  </div>
+              </li>
+            </ul>
+          </div>
+        });
+
+        return (
+          <div >
+            {items}
+            <ul>
+              <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
+                <div className="card-content">
+                  <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        );
+
+
+
+
+const itemArray = ({ Items }) =>{ 
+        return Items.map ( item =>(
+          <div>
+            <ul className="mdc-image-list my-image-list" >
+              <li className="mdc-image-list__item" style={mdc_image_list__item}>
+                <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
+                  <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
+                </div>
+                  <div className="card-content">
+                    <span className="card-title black-text">{item.id}</span>
+                    <p>{item.description}</p>
+                  </div>
+              </li>
+            </ul>
+          </div>
+        ));
+      }
+
+      return (
+          <div >
+            {itemArray}
+            <ul>
+              <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
+                <div className="card-content">
+                  <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        );
+
+    }
+
+
+
+     const itemArray = ({ Items }) => 
+      {
+        let items = Items.map( item => 
+        {
+
+          return(
+            <div>
+              <ul className="mdc-image-list my-image-list" >
+                <li className="mdc-image-list__item" style={mdc_image_list__item}>
+                  <div className="mdc-image-list__image-aspect-container" style={mdc_image_list__image_aspect_container}>
+                    <img className="mdc-image-list__image" src="/system/backgrounds/images/000/000/047/large/boat-branch-color-772429.jpg?1544662264"/>
+                  </div>
+                    <div className="card-content">
+                      <span className="card-title black-text">{item.id}</span>
+                      <p>{item.description}</p>
+                    </div>
+                </li>
+              </ul>
+            </div>
+          )
+
+        }); 
+        
+    }
+
+        return(
+           <div >
+              {itemArray}
+              <ul>
+                <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
+                  <div className="card-content">
+                    <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
