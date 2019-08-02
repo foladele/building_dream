@@ -9,9 +9,10 @@ import M from "materialize-css";
 import CardColor from '../components/CardColor';
 import Modal from '../components/Modal';
 import Items from '../components/Items';
+// import './Styles.css';
 
  const my_image_list  = {
-  // @include mdc_image_list_standard_columns(5);toggleIsLandingPad
+  // @include mdc_image_list_standard_columns(5);
   maxWidth: '960px',
   /*background_color:#f4427a, */  
 }
@@ -77,9 +78,21 @@ class Cards extends React.Component {
         width: '1280px',
         backgroundColor: `${this.props.color}`,
       },
+      fStyle: {
+        height: '400px',
+        width: '1250px',
+        backgroundColor: `${this.props.color}`,
+      },
+      testBC:{
+        color:  `${this.props.color}`,
+      },
       sectionStyle: {
+        // backgroundColor: `${this.props.color}` + '!important',
         color:  `${this.props.color}` + '!important', //'#ffd600',
         textColor: 'black',
+        // height: '400px',
+        width: '1280px',
+        // backgroundColor: `${this.props.color}` + '!important',
       },
       sectionCount: `${this.props.sectionCount}`,
       lastSectionIndex: `${this.props.lastSectionIndex}`,
@@ -90,7 +103,7 @@ class Cards extends React.Component {
       editSection: false,
       id: this.props.id, 
       // title: "", 
-      // color: "", 
+      color: "#fff", 
       // collapse: false, 
       
     };
@@ -100,6 +113,7 @@ class Cards extends React.Component {
     this.update = this.update.bind(this);
     this.toggleCardColor = this.toggleCardColor.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.getColor = this.getColor.bind(this);
     this.toggleEditSection = this.toggleEditSection.bind(this);
   }
 
@@ -140,7 +154,7 @@ class Cards extends React.Component {
     //   },
     //   };
 
-    //M.Modal.init(this.ModalTwo,  options);
+    M.Modal.init(this.ModalTwo,  options);
     M.Modal.init(this.Modal, options);
     
 
@@ -149,9 +163,9 @@ class Cards extends React.Component {
   update(id, title, color, collapse, kind)
   {
 
-    console.log(collapse);
+    // console.log(collapse);
     let new_collapse = !collapse;
-    console.log(new_collapse);
+    // console.log(new_collapse);
     let section = {title: title, color: color, collapse: new_collapse, kind: kind};
     this.props.editSection(id, section);
     
@@ -159,11 +173,11 @@ class Cards extends React.Component {
 
   addSection(e){
      let title = this.refs.title.value;
-     let color = '#dcedc8';
+     let color = this.state.color;
      let collapse = false;
      let kind = this.state.kind;
      e.preventDefault();
-     console.log("Kind " + kind);
+     // console.log("Kind " + kind);
      // console.log("cards sess - " + title + " " +  color + " " + collapse + " " + kind)
      if(title.length !== 0 && kind.length !== 0)
      {
@@ -176,13 +190,13 @@ class Cards extends React.Component {
      
      e.preventDefault();
      let id = this.state.id;
-     // console.log(id + "ididididid")
+     // console.log(this.state.color + " edit Section color")
      if (this.state.editSection === true)
      {
        this.setState({ editSection: !this.state.editSection });
      }
      let title = this.refs.newTitle.value;
-     let color = '#dcedc8';
+     let color = this.state.color;
      let collapse = false;
      let kind = this.props.kind;
      let section = {title: title, color: color, collapse: collapse, kind: kind};
@@ -195,8 +209,14 @@ class Cards extends React.Component {
 
   handleChange(e) {
     e.preventDefault();
-    console.log("e.target " + e.target.value);
+    // console.log("e.target " + e.target.value);
     this.setState({ kind: e.target.value });
+  }
+
+  getColor(color) {
+
+    this.setState({ color: color });
+    
   }
 
   
@@ -210,7 +230,7 @@ class Cards extends React.Component {
 
      this.setState({ editSection: !this.state.editSection });
      this.setState({ id: this.props.id }, () => {
-       console.log(this.state.id, 'this.props.id');
+       // console.log(this.state.id, 'this.props.id');
      }); 
      // console.log("editSection: " + this.state.editSection + " " + this.state.id);
    
@@ -218,11 +238,24 @@ class Cards extends React.Component {
 
  
  render() {
+
+  // let root = document.documentElement;
+  //   root.style.setProperty('--main-bg-color', `${this.props.color}` );
+     
+  let style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = `.grey-${this.props.id} {
+    background-color: ${this.props.color};
+  }`;
+  document.getElementsByTagName('head')[0].appendChild(style);
+
+  let className = `card grey-${this.props.id}`;
+
     return (
       <div className="">
         <div className="">
           <div className="">
-            <div className="card grey lighten-5" style={this.state.sectionStyle}>
+            <div className={className} style={this.state.sectionStyle}>
              <div className="card-action black-text">
                 <span className="card-title">{this.props.title}</span>
                  <a className="right" onClick={ () => this.props.delete(this.props.id) } >delete</a>
@@ -244,7 +277,7 @@ class Cards extends React.Component {
                           this.state.isCardColor ? (
 
                             <div>
-                              { <CardColor /> }
+                              { <CardColor getColor={this.getColor}/> }
                             </div>
 
                           ): (null)
@@ -260,11 +293,11 @@ class Cards extends React.Component {
               {
 
                 Boolean(this.props.collapse) ? (null):
-               (<div className="" style={this.state.bStyle}>
+               (<div className="" style={this.state.fStyle}>
                 <FreeScrollBar>
                  <View>
 
-                   <Items sectionId={this.props.id} sectionKind={this.props.kind}/>
+                   <Items sectionId={this.props.id} sectionKind={this.props.kind} toggleIsNewTextPad={this.props.toggleIsNewTextPad}/>
 
                  </View>
                 </FreeScrollBar>
@@ -297,7 +330,7 @@ class Cards extends React.Component {
                                 this.state.isCardColor ? (
 
                                   <div>
-                                    { <CardColor /> }
+                                    { <CardColor getColor={this.getColor}/> }
                                   </div>
 
                                 ): (null)

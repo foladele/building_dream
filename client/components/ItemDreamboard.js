@@ -1,7 +1,14 @@
 import React from 'react';
 import M from "materialize-css";
 
-
+import Masonry from 'react-masonry-component';
+ 
+const masonryOptions = {
+    transitionDuration: 0
+};
+ 
+const imagesLoadedOptions = { background: '.my-bg-image-el' }
+ 
 const mdc_image_list__image_aspect_container  = {
   position: 'relative',
   boxSizing: 'border_box',

@@ -558,7 +558,23 @@ const itemArray = ({ Items }) =>{
 
 
 
+                 <Popup trigger ={<span className="card-title grey-text center" >Add Item</span>} modal closeOnDocumentClick>
+                    {
+                        <div>
+                          { 
+                            this.props.sectionKind === "dreamboard" ? (
 
+                              <div><h4> hello dreamboard </h4></div>
+
+                             ) : ( 
+                                <div><h4> hello image </h4></div>
+                             )
+                          }
+                        </div>
+
+                      )
+                    }
+                  </Popup>
 
 
 

@@ -40,7 +40,7 @@ constructor(props) {
 addItem(e){
   e.preventDefault();
   let title = "Texts test"
-  let kind = "Texts";
+  let kind = "text";
   let description = "hello Texts test!"
   this.props.addItem(title,kind,description);
  }
@@ -53,7 +53,7 @@ addItem(e){
         <div>
             <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
               <div className="card-content">
-                  <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
+                  <span className="card-title grey-text center" onClick={this.props.toggleIsNewTextPad}>Add Item</span>
               </div>
             </li>
         </div>

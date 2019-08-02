@@ -7,6 +7,7 @@ import Header from '../components/Header';
 import BackgroundList from '../components/BackgroundList';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native-web';
 import FreeScrollBar from 'react-free-scrollbar';
+import TextPad from '../components/TextPad';
 //import Styles from '../components/Styles';
 
 // import MaterialIcon, {colorPalette} from 'material-icons-react';
@@ -68,6 +69,7 @@ class App extends React.Component {
       isLandingPad: false,
       isUserSelection: false,
       isNewCard: false,
+      isNewTextPad: false,
       sections: [],
       sectionCount: 0,
       lastSectionIndex: 0,
@@ -76,6 +78,7 @@ class App extends React.Component {
   this.toggleIsLandingPad = this.toggleIsLandingPad.bind(this);
   this.toggleIsUserSelection = this.toggleIsUserSelection.bind(this);
   this.toggleIsNewCard = this.toggleIsNewCard.bind(this);
+  this.toggleIsNewTextPad = this.toggleIsNewTextPad.bind(this);
   this.addSection = this.addSection.bind(this);
   this.deleteSection = this.deleteSection.bind(this);
   this.onEditSection = this.onEditSection.bind(this);
@@ -88,7 +91,7 @@ class App extends React.Component {
       type: 'GET',
       dataType: 'JSON',
       success: function (data) {
-        console.log(data);
+        // console.log(data);
       }
     }).done( sections => { 
         this.setState({ sections });
@@ -110,15 +113,20 @@ class App extends React.Component {
     this.setState({ isNewCard: !this.state.isNewCard })
   }
 
+  toggleIsNewTextPad(){
+    // console.log("reaching toggleIsNewTextPad APPS");
+      this.setState({ isNewTextPad: !this.state.isNewTextPad }) 
+  }
+
   addSection(title, color, collapse, kind){
-     console.log("App sess - " + title + " " +  color + " " + collapse);
+     // console.log("App sess - " + title + " " +  color + " " + collapse);
      $.ajax({
        url: '/api/sections',
        type: 'POST',
        data: { section: { title, color , collapse, kind}},
        dataType: 'JSON',
        success: function (data) {
-        console.log(data);
+        // console.log(data);
       }
      }).done( section => {
        this.setState({ sections: [...this.state.sections, {...section}]});
@@ -157,7 +165,7 @@ class App extends React.Component {
       data: { section: section },
       dataType: 'JSON'
     }).done( section => {
-      console.log(section);
+      // console.log(section);
       let sections = this.state.sections;
       let editSection = sections.find( i => i.id === section.id );
       editSection.title = section.title;
@@ -181,6 +189,12 @@ class App extends React.Component {
       </div>
       )
 
+    }else if(this.state.isNewTextPad){
+      return(
+        <div>
+          <TextPad toggleIsNewTextPad={this.toggleIsNewTextPad}/>
+        </div>
+      )
     }else if(this.state.isUserSelection){
       return(
         <div>
@@ -201,7 +215,7 @@ class App extends React.Component {
         return(<Cards key={`section-${section.id}`} {...section} 
         toggleIsNewCard={this.toggleIsNewCard} sectionCount={sectionCount} 
         lastSectionIndex={lastSectionIndex}  yourIndex={this.state.sections.indexOf(section)} delete={this.deleteSection}
-         editSection={this.onEditSection} addSection={this.addSection} />);
+         editSection={this.onEditSection} addSection={this.addSection} toggleIsNewTextPad={this.toggleIsNewTextPad}/>);
       })
 
       return (

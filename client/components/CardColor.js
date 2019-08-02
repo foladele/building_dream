@@ -13,6 +13,7 @@ class CardColor extends React.Component {
 
     console.log(this.state.newColor);
     this.setState({ newColor: ncolor.hex });
+    this.props.getColor(this.state.newColor);
     
   }
 

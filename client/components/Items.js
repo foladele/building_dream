@@ -2,8 +2,11 @@ import React from 'react';
 import ItemImages from '../components/ItemImages';
 import ItemDreamboard from '../components/ItemDreamboard';
 import ItemTexts from '../components/ItemTexts';
+import TextPad from '../components/TextPad';
 import M from "materialize-css";
-
+import Popup from "reactjs-popup";
+import Masonry from 'react-masonry-component';
+// import { Redirect } from 'react-router-dom'
 
 const mdc_image_list__image_aspect_container  = {
   position: 'relative',
@@ -47,8 +50,7 @@ constructor(props) {
     this.deleteItem = this.deleteItem.bind(this);
     this.addItem = this.addItem.bind(this);
     this.addItemModal = this.addItemModal.bind(this);
-    // this.ModalMaking = this.ModalMaking.bind(this);
-
+    this.handleChange = this.handleChange.bind(this);
 };
 
 componentWillMount() {
@@ -57,44 +59,13 @@ componentWillMount() {
 	  type: 'GET',
 	  dataType: 'JSON',
 	  success: function (data) {
-	    console.log(data);
+	    // console.log(data);
 	  }
 	}).done( items => { 
 	    this.setState({ items });   
-      console.log(items); 
+      // console.log(items); 
 	})
 }
-
-  componentDidMount() 
-  {
-
-     const options = {
-      onOpenStart: () => {
-        console.log("Open Start");
-       
-      },
-      onOpenEnd: () => {
-        console.log("Open End");
-         
-      },
-      onCloseStart: () => {
-        console.log("Close Start");
-      },
-      onCloseEnd: () => {
-        console.log("Close End");
-      },
-
-      inDuration: 250,
-      outDuration: 250,
-      opacity: 0.5,
-      dismissible: false,
-      startingTop: "4%",
-      endingTop: "10%"
-    };
-
-    M.Modal.init(this.Modal, options);
-  
-  }
 
   addItemModal(e)
   {
@@ -103,9 +74,8 @@ componentWillMount() {
     let kind = this.props.sectionKind;
     let description = "hello test!"
 
-    console.log("kind :::"+kind);
+    // console.log("kind :::"+kind);
     this.addItem(title,kind,description);
-
   }
 
   addItem(title,kind,description){
@@ -116,7 +86,7 @@ componentWillMount() {
      data: { item: {title, kind, description}},
      dataType: 'JSON',
      success: function (data) {
-      console.log(data);
+      // console.log(data);
     }
    }).done( item => {
      this.setState({ items: [...this.state.items, {...item}]});
@@ -130,6 +100,12 @@ deleteItem()
 
 }
 
+ handleChange(e) {
+    e.preventDefault();
+    // console.log("e.target " + e.target.value);
+    // this.setState({ kind: e.target.value });
+  }
+
  render() {
 
  		if (this.state.items === undefined || this.state.items.length == 0) {
@@ -139,10 +115,22 @@ deleteItem()
         }else if(this.props.sectionKind === "dreamboard"){
           return(<ItemDreamboard sectionKind={this.props.sectionKind} sectionId={this.props.sectionId} sectionItem={this.state.noItem} addItem={this.addItem}/>);
         }else if(this.props.sectionKind === "text"){
-          return(<ItemTexts sectionKind={this.props.sectionKind} sectionId={this.props.sectionId} sectionItem={this.state.noItem} addItem={this.addItem}/>);
-        }
+          return( <div>
+              <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
+                <div className="card-content">
+                    <span className="card-title grey-text center" onClick={this.props.toggleIsNewTextPad}>Add Item</span>
+                </div>
+              </li>
+          </div>);        }
 
 		}
+    else if(this.state.isNewTextPad){
+      return (
+        <div className="center">
+          <TextPad toggleIsNewTextPad={this.toggleIsNewTextPad}/>
+        </div>
+      )
+    }
 		else
 		{
       let items = this.state.items.map( item => {
@@ -165,14 +153,52 @@ deleteItem()
 
       return(
         <div>
-          <ul className="mdc-image-list my-image-list" >
-            {items}
-             <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
-              <div className="card-content">
-                <span className="card-title grey-text center" onClick={this.addItemModal}>Add Item</span>
-              </div>
-             </li>
-          </ul>
+            <ul className="mdc-image-list my-image-list" >
+              {items}
+               <li className="mdc-image-list__item image-element-class" style={mdc_image_list__item_new}>
+                <div className="card-content">
+                {
+                  this.props.sectionKind === "text" ? (<div> 
+                      <span className="card-title grey-text center" onClick={this.props.toggleIsNewTextPad}>Add Item</span>
+                    </div>): (<div>
+                      {
+                        this.props.sectionKind === "dreamboard" ? (<div>
+
+                        <Popup trigger ={<span className="card-title grey-text center" >Add Item</span>} modal closeOnDocumentClick>
+                        { close => (
+                            <div>
+                             <div className=""><h4> New Dreamboard </h4></div>
+                             <a className="right" >Tutorials</a>
+                             <input className="modal-content" placeholder="Dreamboard Name" ref="title" required={true} />
+                             <Popup trigger ={<button className="waves-effect waves-green btn-flat black orange-text">Choose a template</button>} modal closeOnDocumentClick>
+                              <span> Popup content </span>
+                             </Popup>
+                              <hr className="grey lighten-5"/>
+                              <div className="modal-footer right">
+                                <a href="#" className="modal-close waves-effect waves-green btn-flat" onClick={close}>CANCEL</a>                    
+                                <a href="#" className="modal-close waves-effect waves-green btn-flat">OK</a>
+                              </div>
+                            </div>
+                        )}
+                       </Popup>
+
+                        </div>) : (<div>
+                        {
+                          <Popup trigger ={<span className="card-title grey-text center" >Add Item</span>} modal closeOnDocumentClick>
+                          {
+                              <div>
+                               <div><h4> hello image </h4></div>
+                              </div>
+                          }
+                         </Popup>
+                        }
+                        </div>)
+                        }
+                    </div>)
+                }
+                </div>
+               </li>
+            </ul>
         </div>
       );
 
