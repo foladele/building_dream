@@ -13,20 +13,20 @@ import TextPad from '../components/TextPad';
 // import MaterialIcon, {colorPalette} from 'material-icons-react';
 const bottomPadding = {
     paddingBottom: '60px',
-    paddingTop: '60px',
+    paddingTop: '300px',
     zIndex: "-1",
 };
 
 const headerStyle = {
 
     width: "100%",
-    position: "fixed",
-    backgroundRepeat: "repeat",
-    backgroundAttachment: "scroll",
-    backgroundPosition:" 0% 0%",
-    top: '0pt',
-    left: '0pt',
-    right: "0pt",
+    // position: "fixed",
+    // backgroundRepeat: "repeat",
+    // backgroundAttachment: "scroll",
+    // backgroundPosition:" 0% 0%",
+    // top: '0pt',
+    // left: '0pt',
+    // right: "0pt",
 
  };
 const Styles = StyleSheet.create({
@@ -73,6 +73,8 @@ class App extends React.Component {
       sections: [],
       sectionCount: 0,
       lastSectionIndex: 0,
+      sectionId: 0,
+      sectionKind: "",
     };
 
   this.toggleIsLandingPad = this.toggleIsLandingPad.bind(this);
@@ -113,9 +115,17 @@ class App extends React.Component {
     this.setState({ isNewCard: !this.state.isNewCard })
   }
 
-  toggleIsNewTextPad(){
+  toggleIsNewTextPad(sectionId, sectionKind){
     // console.log("reaching toggleIsNewTextPad APPS");
-      this.setState({ isNewTextPad: !this.state.isNewTextPad }) 
+    this.setState({ isNewTextPad: !this.state.isNewTextPad });
+
+    if(typeof sectionId == 'number')
+    {
+      console.log("sectionKind : " , sectionKind);
+      this.setState({ sectionId: sectionId });
+      this.setState({ sectionKind: sectionKind });
+      // console.log("state sectionId : " , this.state.sectionId);
+    }
   }
 
   addSection(title, color, collapse, kind){
@@ -192,7 +202,7 @@ class App extends React.Component {
     }else if(this.state.isNewTextPad){
       return(
         <div>
-          <TextPad toggleIsNewTextPad={this.toggleIsNewTextPad}/>
+          <TextPad sectionId={this.state.sectionId} toggleIsNewTextPad={this.toggleIsNewTextPad}/>
         </div>
       )
     }else if(this.state.isUserSelection){

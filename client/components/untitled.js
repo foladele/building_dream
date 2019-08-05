@@ -581,7 +581,38 @@ const itemArray = ({ Items }) =>{
 
 
 
+import './Styles.css';
 
+
+
+class Header extends React.Component {
+
+constructor(props) {
+
+    super(props);
+};
+
+ render() {
+
+    return (
+      <div>
+        <div className="headerImage" >
+          <div className="container">
+            <div className="topnav">
+              <a className=" ">Logo</a>
+              
+              <a onClick={this.props.toggleIsLandingPad}>Menu</a>
+            </div>
+           </div>
+           <div className="center"> <h1>Queen's Dream Board</h1></div>
+        </div>
+      </div>
+    )
+  }
+  
+}
+
+export default Header;
 
 
 

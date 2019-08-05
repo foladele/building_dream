@@ -67,7 +67,7 @@ class ItemImages extends React.Component {
           <ul className="mdc-image-list my-image-list" >
             <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
               <div className="card-content">
-                  <span className="card-title grey-text center" onClick={this.addItem}>Add Item</span>
+                  <span className="card-title grey-text center" onClick={this.addItem}>Add Item--Image</span>
               </div>
             </li>
           </ul>

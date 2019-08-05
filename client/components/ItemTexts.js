@@ -53,7 +53,7 @@ addItem(e){
         <div>
             <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
               <div className="card-content">
-                  <span className="card-title grey-text center" onClick={this.props.toggleIsNewTextPad}>Add Item</span>
+                  <span className="card-title grey-text center" onClick={this.props.toggleIsNewTextPad}>Add Item--2</span>
               </div>
             </li>
         </div>

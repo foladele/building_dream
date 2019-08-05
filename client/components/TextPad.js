@@ -21,6 +21,7 @@ constructor(props) {
 	super(props);
 	this.state ={
 		editorState: EditorState.createEmpty(),
+    eidtTitle: false,
 	};
 
 	this.onChange = this.onChange.bind(this);
@@ -29,12 +30,14 @@ constructor(props) {
 	this.saveContent = this.saveContent.bind(this);
 	this.getBlockStyle = this.getBlockStyle.bind(this);
 	this.onTab = e => this._onTab(e);
+  this.eidtTitle = this.eidtTitle.bind(this);
 
-//session
+//session - component did mount
 	const content = window.sessionStorage.getItem('content');
 
   if (content) {
     this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
+    console.log('content-2 state', convertFromRaw(JSON.parse(content)));
   } else {
     this.state.editorState = EditorState.createEmpty();
   }
@@ -53,7 +56,7 @@ handleKeyCommand(command, editorState){
 	// const contentState = editorState.getCurrentContent();
 	// console.log('content state', convertToRaw(contentState));
 
-	let newState = RichUtils.handleKeyCommand(editorState, command);
+	const newState = RichUtils.handleKeyCommand(editorState, command);
 
 	if(newState){
 		this.onChange(newState);
@@ -65,6 +68,16 @@ handleKeyCommand(command, editorState){
 
 saveContent(content){
   window.sessionStorage.setItem('content', JSON.stringify(convertToRaw(content)));
+  const fileData = new FormData();
+  // fileData.append("background[title]", title);
+  // fileData.append("background[description]", description);
+  // fileData.append("background[kind]", kind);
+  // fileData.append("background[file]", JSON.stringify(convertToRaw(content)));
+
+   // for (var pair of fileData.entries()) {
+   //      console.log(pair); 
+   //      console.log(pair[0]+ ', ' + pair[1]); 
+   //   }
 }
 
 
@@ -92,12 +105,30 @@ getBlockStyle(block) {
   }
 }
 
+eidtTitle()
+{
+   this.setState({ eidtTitle: !this.state.eidtTitle });
+}
+
  render() {
     return (
       <div className="container">
         <div className="RichEditor-root">
-        	<button className="left" onClick={this.props.toggleIsNewTextPad}>back</button>
-        	<h1 className="center">Hello TextPad</h1>
+        	<button className="left" onClick={this.props.toggleIsNewTextPad}>back</button><br/>
+          {
+            this.state.eidtTitle ? 
+            (<div>
+              <button className="right" onClick={this.eidtTitle}>Save</button>
+              <h1 className="center" style={{ padding: "10px", border: "1px solid #ddd"}}>
+                <input placeholder="Title" ref="title" required={true} />
+              </h1>
+
+            </div>) 
+            : 
+            (<div>
+              <h1 className="center" style={{ padding: "10px", border: "1px solid #ddd"}} onClick={this.eidtTitle}>Hello TextPad {this.props.sectionId}</h1>
+            </div>)
+          }
         			<BlockStyleControls
 		            editorState={this.state.editorState}
 		            onToggle={this.toggleBlockType.bind(this)}
@@ -106,7 +137,7 @@ getBlockStyle(block) {
 		            editorState={this.state.editorState}
 		            onToggle={this.toggleInlineStyle.bind(this)}
 		          />
-            	<div className = 'RichEditor-editor' style={{ padding: "10px", border: "1px solid #ddd"}}>
+            	<div className = 'RichEditor-editor' style={{ padding: "10px", border: "1px solid #030a05"}}>
 		        		<Editor
 		        			editorState={this.state.editorState}
 		        			blockStyleFn={this.getBlockStyle}

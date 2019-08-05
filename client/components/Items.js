@@ -51,6 +51,7 @@ constructor(props) {
     this.addItem = this.addItem.bind(this);
     this.addItemModal = this.addItemModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.toggleIsNewTextPad = this.toggleIsNewTextPad.bind(this);
 };
 
 componentWillMount() {
@@ -76,6 +77,11 @@ componentWillMount() {
 
     // console.log("kind :::"+kind);
     this.addItem(title,kind,description);
+  }
+
+  toggleIsNewTextPad()
+  {
+    this.props.toggleIsNewTextPad(this.props.sectionId, this.props.sectionKind);
   }
 
   addItem(title,kind,description){
@@ -118,19 +124,19 @@ deleteItem()
           return( <div>
               <li className="mdc-image-list__item" style={mdc_image_list__item_new}>
                 <div className="card-content">
-                    <span className="card-title grey-text center" onClick={this.props.toggleIsNewTextPad}>Add Item</span>
+                    <span className="card-title grey-text center" onClick={this.toggleIsNewTextPad}>Add Item--5</span>
                 </div>
               </li>
           </div>);        }
 
 		}
-    else if(this.state.isNewTextPad){
-      return (
-        <div className="center">
-          <TextPad toggleIsNewTextPad={this.toggleIsNewTextPad}/>
-        </div>
-      )
-    }
+    // else if(this.state.isNewTextPad){
+    //   return (
+    //     <div className="center">
+    //       <TextPad toggleIsNewTextPad={this.toggleIsNewTextPad}/>
+    //     </div>
+    //   )
+    // }
 		else
 		{
       let items = this.state.items.map( item => {
@@ -159,12 +165,12 @@ deleteItem()
                 <div className="card-content">
                 {
                   this.props.sectionKind === "text" ? (<div> 
-                      <span className="card-title grey-text center" onClick={this.props.toggleIsNewTextPad}>Add Item</span>
+                      <span className="card-title grey-text center" onClick={this.toggleIsNewTextPad}>Add Item--1</span>
                     </div>): (<div>
                       {
                         this.props.sectionKind === "dreamboard" ? (<div>
 
-                        <Popup trigger ={<span className="card-title grey-text center" >Add Item</span>} modal closeOnDocumentClick>
+                        <Popup trigger ={<span className="card-title grey-text center" >Add Item--3</span>} modal closeOnDocumentClick>
                         { close => (
                             <div>
                              <div className=""><h4> New Dreamboard </h4></div>
@@ -184,7 +190,7 @@ deleteItem()
 
                         </div>) : (<div>
                         {
-                          <Popup trigger ={<span className="card-title grey-text center" >Add Item</span>} modal closeOnDocumentClick>
+                          <Popup trigger ={<span className="card-title grey-text center" >Add Item--4</span>} modal closeOnDocumentClick>
                           {
                               <div>
                                <div><h4> hello image </h4></div>
