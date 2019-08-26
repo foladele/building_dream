@@ -20,9 +20,6 @@ const INLINE_STYLES = [
   }, {
     label: 'Link',
     style: 'LINK'
-  },{
-    label: 'Image',
-    style: 'IMAGE'
   }
 
 ];

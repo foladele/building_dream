@@ -3,7 +3,9 @@ import { AtomicBlockUtils, convertToRaw, convertFromRaw, EditorState, RichUtils 
 import Editor from 'draft-js-plugins-editor';
 import BlockStyleControls from '../components/BlockStyleControls';
 import InlineStyleControls from '../components/InlineStyleControls';
-
+import PropTypes from "prop-types";
+import Dropzone from 'react-dropzone';
+import request from "superagent";
 
 const styleMap = {
   CODE: {
@@ -22,6 +24,10 @@ constructor(props) {
 	this.state ={
 		editorState: EditorState.createEmpty(),
     eidtTitle: false,
+    showURLInput: false,
+    url: '',
+    urlType: '',
+    files: [],
 	};
 
 	this.onChange = this.onChange.bind(this);
@@ -29,24 +35,52 @@ constructor(props) {
 	this.handleKeyCommand = this.handleKeyCommand.bind(this);
 	this.saveContent = this.saveContent.bind(this);
 	this.getBlockStyle = this.getBlockStyle.bind(this);
-	this.onTab = e => this._onTab(e);
+	this.onTab = this.onTab.bind(this);
   this.eidtTitle = this.eidtTitle.bind(this);
+  this.addImage = this.addImage.bind(this);
 
 //session - component did mount
 	const content = window.sessionStorage.getItem('content');
 
   if (content) {
     this.state.editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(content)));
-    console.log('content-2 state', convertFromRaw(JSON.parse(content)));
+    // console.log('content-2 state', convertFromRaw(JSON.parse(content)));
   } else {
     this.state.editorState = EditorState.createEmpty();
   }
 	
 }
 
+  componentWillUnmount() {
+    // Make sure to revoke the data uris to avoid memory leaks
+    this.state.files.forEach(f => URL.revokeObjectURL(f.preview))
+  }
+
+  componentDidMount()
+  {
+
+  }
+
 	onChange = (editorState) => {
 		const contentState = editorState.getCurrentContent();
 		console.log('content state', convertToRaw(contentState));
+
+    // if (contentState.hasText()) {
+
+      // console.log('content.first: ', contentState.getBlockMap().first().getText());
+      // convertToRaw(contentState).blocks.map(el=>
+      //   console.log(el.inlineStyleRanges));
+        // el.inlineStyleRanges.map(r => 
+        //   console.log(r.style));
+        //   );
+        
+
+      // if (contentState.getBlockMap().first().getType() !== 'unstyled') {
+        
+      // }
+    // }
+
+
 		this.saveContent(contentState);
 		this.setState({editorState});
 	}
@@ -55,7 +89,7 @@ handleKeyCommand(command, editorState){
 
 	// const contentState = editorState.getCurrentContent();
 	// console.log('content state', convertToRaw(contentState));
-
+  console.log('command: ', command);
 	const newState = RichUtils.handleKeyCommand(editorState, command);
 
 	if(newState){
@@ -69,6 +103,8 @@ handleKeyCommand(command, editorState){
 saveContent(content){
   window.sessionStorage.setItem('content', JSON.stringify(convertToRaw(content)));
   const fileData = new FormData();
+
+  // next to save it as a file to DB
   // fileData.append("background[title]", title);
   // fileData.append("background[description]", description);
   // fileData.append("background[kind]", kind);
@@ -81,7 +117,7 @@ saveContent(content){
 }
 
 
-_onTab(e) {
+onTab(e) {
 	  // e.preventDefault();
 	  alert("reaching onTab!!!")
     const maxDepth = 4;
@@ -97,11 +133,61 @@ toggleInlineStyle(inlineStyle) {
   }
 
 getBlockStyle(block) {
+  // console.log("block: ", block.getType());
   switch (block.getType()) {
     case 'blockquote':
       return 'RichEditor-blockquote';
+    case 'code-block':
+      return 'card card-title card-content';
     default:
       return null;
+  }
+}
+
+promptForMedia(type){
+
+  this.setState({
+      showURLInput: true,
+      urlValue: '',
+      urlType: type
+    }, () => {
+      setTimeout(() => this.refs.url.focus(), 0);
+    });
+
+}
+
+toggleShowURLInput()
+{
+  this.setState({
+    showURLInput: !this.state.showURLInput,
+  });
+}
+
+addImage(acceptedFiles)
+{
+  this.setState({
+      files: acceptedFiles
+  });
+  
+  var binaryStr;
+  const fileList = document.getElementById("fileList");
+  fileList.innerHTML = "";
+  console.log("reaching -0", acceptedFiles[0])
+  for (let i = 0; i < acceptedFiles.length; i++) {
+
+    console.log("reaching -i times", acceptedFiles[i]);
+
+    const file = acceptedFiles[i];
+    const img = document.createElement("img");
+    img.classList.add("obj");
+    img.file = file;
+    img.height = 250;
+    console.log("img ", img.src);
+    fileList.appendChild(img);
+
+    const reader = new FileReader();
+    reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+    reader.readAsDataURL(file);
   }
 }
 
@@ -111,6 +197,7 @@ eidtTitle()
 }
 
  render() {
+  const {files} = this.state;
     return (
       <div className="container">
         <div className="RichEditor-root">
@@ -137,6 +224,36 @@ eidtTitle()
 		            editorState={this.state.editorState}
 		            onToggle={this.toggleInlineStyle.bind(this)}
 		          />
+              <button 
+                onMouseDown={this.toggleShowURLInput.bind(this)}
+                className="waves-effect waves-light btn">Add Image
+              </button>
+              {
+                this.state.showURLInput ? 
+                (
+                  <div>
+ 
+                  <Dropzone onDrop={this.addImage}>
+                      {({ isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
+                        if (isDragActive) {
+                          return "This file is authorized";
+                        }
+                        if (isDragReject) {
+                          return "This file is not authorized";
+                        }
+                        return acceptedFiles.length || rejectedFiles.length
+                          ? `Accepted ${acceptedFiles.length}, rejected ${rejectedFiles.length} files`
+                          : "Try dropping some files.";
+                      }}
+                    </Dropzone>
+                    <div id="fileList">
+                      <p>No files selected!</p>
+                    </div>
+                  </div>
+                ) : 
+                (null)
+              }
+
             	<div className = 'RichEditor-editor' style={{ padding: "10px", border: "1px solid #030a05"}}>
 		        		<Editor
 		        			editorState={this.state.editorState}
@@ -144,7 +261,9 @@ eidtTitle()
 		        			customStyleMap={styleMap}
 		        			onChange={this.onChange}
 		        			handleKeyCommand={this.handleKeyCommand}
+                  onTab={this.onTab}
 		        			ref="editor"
+                  placeholder="Enter some text..."
               		spellCheck={true}
 		        		/>
 		        	</div>

@@ -250,6 +250,7 @@ class Cards extends React.Component {
   document.getElementsByTagName('head')[0].appendChild(style);
 
   let className = `card grey-${this.props.id}`;
+  let bottomCard = `card-content black-text grey-${this.props.id}`;
 
     return (
       <div className="">
@@ -289,11 +290,11 @@ class Cards extends React.Component {
                   } 
 
               </div>
-              <div className="card-content black-text white">
+              <div >
               {
 
                 Boolean(this.props.collapse) ? (null):
-               (<div className="" style={this.state.fStyle}>
+               (<div className={bottomCard} style={this.state.fStyle}>
                 <FreeScrollBar>
                  <View>
 
@@ -303,12 +304,13 @@ class Cards extends React.Component {
                 </FreeScrollBar>
                </div>)
                }
-               <div>
+               <div >
                { 
                 this.props.lastSectionIndex === this.props.yourIndex ? (
                 <div className="card-action " >     
-                    <div>
-                      <a className="right" >XXXX</a>
+                    <div className={bottomCard}>
+                      <a className="left" >Previous</a>
+                      <a className="right" >Next</a>
                       <div ref={Modal => { this.Modal = Modal; }} id="modal2" className="modal modal-fixed-footer" >
                         <div className="modal-content">
                           <div>

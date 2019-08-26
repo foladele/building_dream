@@ -229,11 +229,11 @@ class App extends React.Component {
       })
 
       return (
-        <div >
+        <div className="">
           <nav style={headerStyle}>
             <Header toggleIsLandingPad={this.toggleIsLandingPad}/>
           </nav>
-          <div style={bottomPadding} >
+          <div className="" style={bottomPadding} >
             <ul>
               { sections }
             </ul>

@@ -13,7 +13,7 @@ constructor(props) {
  render() {
 
     return (
-      <div  className="headerImage">
+      <div  className="card-title headerImage">
 	      <div className="nav-wrapper container-navbar">
 	       <div className="topnav">
 		        <a href="#" className="brand-logo right ">Logo</a>

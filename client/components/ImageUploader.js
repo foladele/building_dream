@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from "prop-types";
 import Dropzone from 'react-dropzone';
 import request from "superagent";
@@ -63,6 +63,7 @@ class ImageUploader extends React.Component {
     })
   }
 
+
   onDrop(files) {
 
     this.setState({
@@ -73,7 +74,8 @@ class ImageUploader extends React.Component {
     //   files: files.map(file => Object.assign(file, {preview: URL.createObjectURL(file)}))
     // });
 
-    console.log(this.state.files)
+    console.log("this.state.files ", this.state.files)
+
 
      files.map(img => {
 	 		let name = "image";
@@ -89,8 +91,9 @@ class ImageUploader extends React.Component {
       
      //  for (var pair of fileData.entries()) {
      //    console.log(pair); 
-     //    console.log(pair[0]+ ', ' + pair[1]); 
+     //    console.log(pair[0].path+ ', ' + pair[1]); 
      // }
+
       let id = 47;
      	$.ajax({
 	    url: `/api/backgrounds/${id}`,
@@ -118,7 +121,7 @@ class ImageUploader extends React.Component {
     const {files} = this.state;
     return (
       <div>
-        <Dropzone onDrop={this.onDrop.bind(this)}>
+        <Dropzone onDrop={this.onDrop.bind(this)} >
           {({ isDragActive, isDragReject, acceptedFiles, rejectedFiles }) => {
             if (isDragActive) {
               return "This file is authorized";
