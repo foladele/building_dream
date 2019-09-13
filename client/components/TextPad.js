@@ -16,6 +16,39 @@ const styleMap = {
   }
 };
 
+const Video = (props) => {
+  return <video controls src={props.src} style={styles.media}/>;
+};
+
+const Audio = (props) => {
+  return <audio controls src={props.src} style={styles.media}/>;
+};
+
+const Image = (props) => {
+  return <img src={props.src} style={styles.media} alt="Example"/>;
+};
+
+
+const Media = (props) => {
+  const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+  const {src} = entity.getData();
+  const type = entity.getType();
+  let media;
+  if (type === 'audio') {
+    media = <Audio src={src}/>;
+  } else if (type === 'image') {
+    media = <Image src={src}/>;
+  } else if (type === 'video') {
+    media = <Video src={src}/>;
+  }
+  return media;
+};
+
+const styles = {
+  media: {
+    width: '100%'
+  }
+};
 
 class TextPad extends React.Component {
 
@@ -27,6 +60,7 @@ constructor(props) {
     showURLInput: false,
     url: '',
     urlType: '',
+    urlValue: '',
     files: [],
 	};
 
@@ -38,6 +72,8 @@ constructor(props) {
 	this.onTab = this.onTab.bind(this);
   this.eidtTitle = this.eidtTitle.bind(this);
   this.addImage = this.addImage.bind(this);
+  this.mediaBlockRenderer = this.mediaBlockRenderer.bind(this);
+  this.confirm = this.confirm.bind(this);
 
 //session - component did mount
 	const content = window.sessionStorage.getItem('content');
@@ -89,7 +125,7 @@ handleKeyCommand(command, editorState){
 
 	// const contentState = editorState.getCurrentContent();
 	// console.log('content state', convertToRaw(contentState));
-  console.log('command: ', command);
+  // console.log('command: ', command);
 	const newState = RichUtils.handleKeyCommand(editorState, command);
 
 	if(newState){
@@ -144,23 +180,45 @@ getBlockStyle(block) {
   }
 }
 
-promptForMedia(type){
-
-  this.setState({
-      showURLInput: true,
-      urlValue: '',
-      urlType: type
-    }, () => {
-      setTimeout(() => this.refs.url.focus(), 0);
-    });
-
-}
 
 toggleShowURLInput()
 {
   this.setState({
     showURLInput: !this.state.showURLInput,
   });
+}
+
+promptForMedia(type, src){
+
+  // console.log("src: ", src);
+  // console.log(" state src: ", this.state.urlValue);
+  this.setState({
+      showURLInput: true,
+      urlValue: src,
+      urlType: type
+    // }, () => {
+    //   setTimeout(() => this.refs.url.focus(), 0);
+    });
+
+}
+
+confirm(e)
+{
+  // this.toggleShowURLInput;
+  // alert('yay buttons!')
+  e.preventDefault();
+    const {editorState, urlValue, urlType} = this.state;
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(urlType, 'IMMUTABLE', { src: urlValue });
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set(editorState, { currentContent: contentStateWithEntity });
+    this.setState({
+      editorState: AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' '),
+      showURLInput: false,
+      urlValue: ''
+    }, () => {
+      setTimeout(() => this.focus(), 0);
+    });
 }
 
 addImage(acceptedFiles)
@@ -182,18 +240,40 @@ addImage(acceptedFiles)
     img.classList.add("obj");
     img.file = file;
     img.height = 250;
-    console.log("img ", img.src);
     fileList.appendChild(img);
 
     const reader = new FileReader();
-    reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(img);
+    reader.onload = (function(aImg) 
+    { return function(e) { 
+        aImg.src = e.target.result;
+        this.setState({
+          urlValue: aImg.src
+        });
+        this.promptForMedia('image', aImg.src);
+      }; 
+    })(img).bind(this);
+    
     reader.readAsDataURL(file);
+    const saveBtn = document.createElement("button");
+    const sbr = document.createElement("br");
+    fileList.appendChild(sbr);
+    saveBtn.innerHTML = "Save";
+    saveBtn.onclick = this.confirm;
+    fileList.appendChild(saveBtn);
+    
   }
 }
 
 eidtTitle()
 {
    this.setState({ eidtTitle: !this.state.eidtTitle });
+}
+
+mediaBlockRenderer(block) {
+  if (block.getType() === 'atomic') {
+    return { component: Media, editable: false };
+  }
+  return null;
 }
 
  render() {
@@ -256,6 +336,7 @@ eidtTitle()
 
             	<div className = 'RichEditor-editor' style={{ padding: "10px", border: "1px solid #030a05"}}>
 		        		<Editor
+                  blockRendererFn={this.mediaBlockRenderer}
 		        			editorState={this.state.editorState}
 		        			blockStyleFn={this.getBlockStyle}
 		        			customStyleMap={styleMap}
