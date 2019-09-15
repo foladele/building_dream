@@ -20,6 +20,9 @@ const INLINE_STYLES = [
   }, {
     label: 'Link',
     style: 'LINK'
+  }, {
+    label: 'center',
+    style: 'center'
   }
 
 ];

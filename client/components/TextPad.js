@@ -1,8 +1,9 @@
 import React from 'react';
-import { AtomicBlockUtils, convertToRaw, convertFromRaw, EditorState, RichUtils } from 'draft-js';
+import { AtomicBlockUtils, convertToRaw, Modifier, convertFromRaw, EditorState, RichUtils } from 'draft-js';
 import Editor from 'draft-js-plugins-editor';
 import BlockStyleControls from '../components/BlockStyleControls';
 import InlineStyleControls from '../components/InlineStyleControls';
+import ColorControls from '../components/ColorControls';
 import PropTypes from "prop-types";
 import Dropzone from 'react-dropzone';
 import request from "superagent";
@@ -13,7 +14,28 @@ const styleMap = {
     fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
     fontSize: 16,
     padding: 2
-  }
+  },
+  red: {
+    color: 'rgba(255, 0, 0, 1.0)',
+  },
+  orange: {
+    color: 'rgba(255, 127, 0, 1.0)',
+  },
+  yellow: {
+    color: 'rgba(180, 180, 0, 1.0)',
+  },
+  green: {
+    color: 'rgba(0, 180, 0, 1.0)',
+  },
+  blue: {
+    color: 'rgba(0, 0, 255, 1.0)',
+  },
+  indigo: {
+    color: 'rgba(75, 0, 130, 1.0)',
+  },
+  violet: {
+    color: 'rgba(127, 0, 255, 1.0)',
+  },
 };
 
 const Video = (props) => {
@@ -74,6 +96,7 @@ constructor(props) {
   this.addImage = this.addImage.bind(this);
   this.mediaBlockRenderer = this.mediaBlockRenderer.bind(this);
   this.confirm = this.confirm.bind(this);
+  this.toggleColor = this.toggleColor.bind(this);
 
 //session - component did mount
 	const content = window.sessionStorage.getItem('content');
@@ -99,7 +122,7 @@ constructor(props) {
 
 	onChange = (editorState) => {
 		const contentState = editorState.getCurrentContent();
-		console.log('content state', convertToRaw(contentState));
+		// console.log('content state', convertToRaw(contentState));
 
     // if (contentState.hasText()) {
 
@@ -155,7 +178,8 @@ saveContent(content){
 
 onTab(e) {
 	  // e.preventDefault();
-	  alert("reaching onTab!!!")
+	  // alert("reaching onTab!!!")
+    console.log("event code", e.keyCode);
     const maxDepth = 4;
     this.onChange(RichUtils.onTab(e, this.state.editorState, maxDepth));
   }
@@ -165,21 +189,55 @@ onTab(e) {
   }
 
 toggleInlineStyle(inlineStyle) {
+    //cosole.log("inlineStyle: ", inlineStyle);
     this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle));
   }
 
 getBlockStyle(block) {
-  // console.log("block: ", block.getType());
+  console.log("block: ", block.getType());
   switch (block.getType()) {
     case 'blockquote':
       return 'RichEditor-blockquote';
     case 'code-block':
       return 'card card-title card-content';
+    case 'center':
+      return 'center';
     default:
       return null;
   }
 }
 
+toggleColor(toggledColor)
+{
+  // alert('yay toggledColor');
+  const {editorState} = this.state;
+  const selection = editorState.getSelection();
+  // Let's just allow one color at a time. Turn off all active colors.
+  const nextContentState = Object.keys(styleMap)
+    .reduce((contentState, color) => {
+      return Modifier.removeInlineStyle(contentState, selection, color)
+    }, editorState.getCurrentContent());
+  let nextEditorState = EditorState.push(
+    editorState,
+    nextContentState,
+    'change-inline-style'
+  );
+  const currentStyle = editorState.getCurrentInlineStyle();
+  // Unset style override for current color.
+  if (selection.isCollapsed()) {
+    nextEditorState = currentStyle.reduce((state, color) => {
+      return RichUtils.toggleInlineStyle(state, color);
+    }, nextEditorState);
+  }
+  // If the color is being toggled on, apply it.
+  if (!currentStyle.has(toggledColor)) {
+    nextEditorState = RichUtils.toggleInlineStyle(
+      nextEditorState,
+      toggledColor
+    );
+  }
+  this.onChange(nextEditorState);
+}
 
 toggleShowURLInput()
 {
@@ -196,16 +254,12 @@ promptForMedia(type, src){
       showURLInput: true,
       urlValue: src,
       urlType: type
-    // }, () => {
-    //   setTimeout(() => this.refs.url.focus(), 0);
     });
 
 }
 
 confirm(e)
 {
-  // this.toggleShowURLInput;
-  // alert('yay buttons!')
   e.preventDefault();
     const {editorState, urlValue, urlType} = this.state;
     const contentState = editorState.getCurrentContent();
@@ -304,6 +358,10 @@ mediaBlockRenderer(block) {
 		            editorState={this.state.editorState}
 		            onToggle={this.toggleInlineStyle.bind(this)}
 		          />
+              <ColorControls
+                editorState={this.state.editorState}
+                onToggle={this.toggleColor}
+              />
               <button 
                 onMouseDown={this.toggleShowURLInput.bind(this)}
                 className="waves-effect waves-light btn">Add Image

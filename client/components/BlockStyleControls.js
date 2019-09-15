@@ -35,6 +35,9 @@ const BLOCK_TYPES = [
   }, {
     label: 'Code Block',
     style: 'code-block'
+  },{
+    label: 'center',
+    style: 'center'
   }
 ];
 
