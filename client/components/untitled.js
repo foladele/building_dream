@@ -634,7 +634,18 @@ export default Header;
 
 
 
-
+this.state.showURLInput ? 
+                (
+                  <div>
+                    <p>herro</p>
+                    <input type="file" id="fileElem" multiple accept="image/*" style={{display: "none"}} type="file" onChange={this.handleFiles}/>
+                    <a href="#" id="fileSelect" onClick={this.isClicked}>Select some files</a> 
+                    <div id="fileList">
+                      <p>No files selected!</p>
+                    </div>
+                  </div>
+                ) : 
+                (null)
 
 
 

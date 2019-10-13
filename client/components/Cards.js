@@ -118,6 +118,7 @@ class Cards extends React.Component {
   }
 
   componentDidMount() {
+    console.log("Reaching");
     const options = {
       onOpenStart: () => {
         console.log("Open Start");
@@ -163,7 +164,7 @@ class Cards extends React.Component {
   update(id, title, color, collapse, kind)
   {
 
-    // console.log(collapse);
+    console.log("cards sess - " + title + " " +  color + " " + collapse + " " + kind);
     let new_collapse = !collapse;
     // console.log(new_collapse);
     let section = {title: title, color: color, collapse: new_collapse, kind: kind};
@@ -200,6 +201,7 @@ class Cards extends React.Component {
      let collapse = false;
      let kind = this.props.kind;
      let section = {title: title, color: color, collapse: collapse, kind: kind};
+     console.log("cards sess - " + title + " " +  color + " " + collapse + " " + kind)
      if(title.length !== 0)
      {
       this.props.editSection(id, section);

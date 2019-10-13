@@ -19,6 +19,7 @@ class Api::ItemsController < ApplicationController
     # binding.pry
     # item = Item.new(item_params)
     @item = @section.items.new(item_params)
+    # binding.pry
     if @item.save
       render json: @item
     else
@@ -50,6 +51,6 @@ class Api::ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:item).permit(:title, :kind, :description, :file)
+      params.require(:item).permit(:title, :kind, :description)
     end
 end

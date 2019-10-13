@@ -21,7 +21,9 @@ class Api::SectionsController < ApplicationController
     
     @section = Section.find(params[:id])
     # section.update(name: params[:name], color: params[:color])
+    
     if @section.update(section_params)
+      
       render json: @section
     else
        render json: { errors: @section.errors, status: :unprocessable_entity }
