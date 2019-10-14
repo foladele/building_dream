@@ -62,6 +62,7 @@ constructor(props) {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.itemImages = this.itemImages.bind(this);
+    this.deleteItemImages = this.deleteItemImages.bind(this);
 };
 
 componentWillMount() {
@@ -220,6 +221,25 @@ itemImages(title,kind,description, acceptedFiles){
 
 }
 
+deleteItemImages(id){
+  //console.log("reaching", id);
+  $.ajax({
+      url: `/api/sections/${this.props.sectionId}/item_images/${id}`,
+      type: 'DELETE'
+    }).done( item  => {
+      let items = this.state.items;
+      let index = items.findIndex( b => b.id === item.id );
+      this.setState({ 
+        items: [
+          ...items.slice(0, index),
+          ...items.slice(index + 1, items.length)
+        ] 
+      });
+    }).fail( msg => {
+      alert(msg.errors);
+    });
+}
+
 
   addItem(title,kind,description, image){
 
@@ -294,7 +314,8 @@ deleteItem()
           itemId={item.id}
           itemImage={item.image}  
           sectionItem={this.state.itemPresent} 
-          addItem={this.itemImages}/>);
+          addItem={this.itemImages}
+          deleteItemImages={this.deleteItemImages}/>);
 
         }else if(item.kind === "dreamboard"){
 

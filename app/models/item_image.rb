@@ -19,6 +19,6 @@ class ItemImage < ApplicationRecord
 	 end
 
    def image_url_large
-    image.url(:medium)
+    image.url(:large)
    end
 end

@@ -55,6 +55,7 @@ class ItemImages extends React.Component {
    this.addItem = this.addItem.bind(this);
    this.openModal = this.openModal.bind(this);
    this.closeModal = this.closeModal.bind(this);
+   this.deleteItemImages = this.deleteItemImages.bind(this);
 	}
 
   componentWillMount(){
@@ -92,26 +93,13 @@ class ItemImages extends React.Component {
     let title = this.refs.imgtitle.value;;
     let description = this.refs.imagedes.value;
     let kind = this.props.sectionKind;
-    // let image = img;
 
     this.props.addItem(title,kind,description,this.state.acceptedFiles);
 
-  //   this.state.acceptedFiles.map(img => {
+  }
 
-  //     console.log("errthing-1: ", title + " " + description + " " + kind);
-  //     if(title.length !== 0 && description.length !== 0 && image.length !== 0){
-        
-  //       const fileData = new FormData();
-  //       fileData.append("background[title]", title);
-  //       fileData.append("background[description]", description);
-  //       fileData.append("background[kind]", kind);
-  //       fileData.append("background[file]", image);
-        
-  //     }
-      
-  // });
-    
-  //   this.props.addItem(title,kind,description);
+  deleteItemImages(){
+    this.props.deleteItemImages(this.props.id);
   }
 
 onDrop(acceptedFiles)
@@ -228,9 +216,8 @@ onDrop(acceptedFiles)
                 <div className="card-content">
                   <span className="card-title black-text">{this.props.title}</span>
                   <p>{this.props.description}</p>
-                  <i class="material-icons">add</i>
-                  <a href="#" className="modal-close waves-effect waves-green btn-flat right">Delete</a>
-                  <a href="#" className="modal-close waves-effect waves-green btn-flat right">Edit</a>
+                  <a className="modal-close waves-effect waves-green btn-flat right" onClick={this.deleteItemImages}>Delete</a>
+                  <a className="modal-close waves-effect waves-green btn-flat right">Edit</a>
                 </div>
             </li>
         </div>

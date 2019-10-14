@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20191012210426) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.bigint "image_file_size"
     t.datetime "image_updated_at"
     t.boolean "status"
   end
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20191012210426) do
     t.datetime "updated_at", null: false
     t.string "image_file_name"
     t.string "image_content_type"
-    t.integer "image_file_size"
+    t.integer "image_file_size", limit: 8
     t.datetime "image_updated_at"
     t.integer "section_id"
     t.string "title"
